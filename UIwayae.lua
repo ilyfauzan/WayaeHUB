@@ -234,7 +234,7 @@ local function CreateTextBox(parent, placeholder)
     box.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
     box.TextColor3 = Color3.fromRGB(255, 255, 255)
     box.Font = Enum.Font.Gotham
-    box.TextSize = 13
+    box.TextSize = 11 -- Diperkecil agar tulisan panjang tidak terpotong
     box.TextXAlignment = Enum.TextXAlignment.Left
     box.Parent = parent
     local pad = Instance.new("UIPadding")
@@ -271,8 +271,8 @@ LabelEmote.Font = Enum.Font.GothamBold
 LabelEmote.TextSize = 18
 LabelEmote.Parent = PageEmote
 
-local InputTarget = CreateTextBox(PageEmote, "Emote yang dimiliki (Cth: SwagWalk)")
-local InputSource = CreateTextBox(PageEmote, "Emote pengganti (Cth: Broom)")
+local InputTarget = CreateTextBox(PageEmote, "Emote Target (Cth: SwagWalk)")
+local InputSource = CreateTextBox(PageEmote, "Emote Baru (Cth: Broom)")
 
 local BtnExecuteSwap = Instance.new("TextButton")
 BtnExecuteSwap.Size = UDim2.new(0.5, 0, 0, 40)
@@ -331,8 +331,8 @@ LabelUnusual.Font = Enum.Font.GothamBold
 LabelUnusual.TextSize = 18
 LabelUnusual.Parent = PageUnusual
 
-local InputUnTarget = CreateTextBox(PageUnusual, "Unusual dimiliki (Cth: MysticalTree)")
-local InputUnSource = CreateTextBox(PageUnusual, "Unusual pengganti (Cth: AngelicRedemption)")
+local InputUnTarget = CreateTextBox(PageUnusual, "Unusual Target (Cth: MysticalTree)")
+local InputUnSource = CreateTextBox(PageUnusual, "Unusual Baru (Cth: AngelicRedemption)")
 
 local BtnExecUnusual = Instance.new("TextButton")
 BtnExecUnusual.Size = UDim2.new(0.5, 0, 0, 40)
