@@ -101,19 +101,19 @@ function ShaderManager.Apply(shaderId)
         if Terrain then CreateEffect("Clouds", { Color = Color3.fromRGB(0, 0, 0), Cover = 0, Density = 0 }, Terrain) end
 
     elseif shaderId == 11 then
-        CreateEffect("ColorCorrectionEffect", { Contrast = 0.15, Saturation = 0.2, Brightness = 0, TintColor = Color3.fromRGB(255, 255, 255) })
-        CreateEffect("Atmosphere", { Density = 0.2, Offset = 0.25, Color = Color3.fromRGB(130, 200, 255), Decay = Color3.fromRGB(100, 150, 255), Glare = 0.1, Haze = 1 })
+        CreateEffect("ColorCorrectionEffect", { Contrast = 0.1, Saturation = 0.2, Brightness = -0.05, TintColor = Color3.fromRGB(255, 255, 255) })
+        CreateEffect("Atmosphere", { Density = 0.2, Offset = 0.25, Color = Color3.fromRGB(130, 200, 255), Decay = Color3.fromRGB(100, 150, 255), Glare = 0, Haze = 1 })
         CreateEffect("Sky", { SunAngularSize = 5 })
-        CreateEffect("SunRaysEffect", { Intensity = 0.15, Spread = 0.4 })
-        CreateEffect("BloomEffect", { Intensity = 0.1, Size = 15, Threshold = 1.0 })
+        CreateEffect("SunRaysEffect", { Intensity = 0.05, Spread = 0.4 })
+        CreateEffect("BloomEffect", { Intensity = 0.05, Size = 15, Threshold = 1.5 })
         CreateEffect("DepthOfFieldEffect", { FarIntensity = 0.1, NearIntensity = 0, FocusDistance = 25, InFocusRadius = 50 })
         if Terrain then CreateEffect("Clouds", { Color = Color3.fromRGB(255, 255, 255), Cover = 0.4, Density = 0.3 }, Terrain) end
 
     elseif shaderId == 12 then
-        CreateEffect("ColorCorrectionEffect", { Contrast = 0.25, Saturation = 0.1, TintColor = Color3.fromRGB(230, 240, 255) })
-        CreateEffect("Atmosphere", { Density = 0.3, Offset = 0.25, Color = Color3.fromRGB(20, 60, 100), Decay = Color3.fromRGB(200, 100, 50), Glare = 0.8, Haze = 2 })
-        CreateEffect("SunRaysEffect", { Intensity = 0.4, Spread = 0.8 })
-        CreateEffect("BloomEffect", { Intensity = 0.3, Size = 24, Threshold = 0.8 })
+        CreateEffect("ColorCorrectionEffect", { Contrast = 0.15, Saturation = 0.1, Brightness = -0.05, TintColor = Color3.fromRGB(230, 240, 255) })
+        CreateEffect("Atmosphere", { Density = 0.3, Offset = 0.25, Color = Color3.fromRGB(20, 60, 100), Decay = Color3.fromRGB(200, 100, 50), Glare = 0, Haze = 2 })
+        CreateEffect("SunRaysEffect", { Intensity = 0.1, Spread = 0.6 })
+        CreateEffect("BloomEffect", { Intensity = 0.1, Size = 20, Threshold = 1.5 })
         CreateEffect("DepthOfFieldEffect", { FarIntensity = 0.15, NearIntensity = 0, FocusDistance = 25, InFocusRadius = 50 })
         if Terrain then CreateEffect("Clouds", { Color = Color3.fromRGB(240, 245, 255), Cover = 0.5, Density = 0.5 }, Terrain) end
 
@@ -126,11 +126,11 @@ function ShaderManager.Apply(shaderId)
         if Terrain then CreateEffect("Clouds", { Color = Color3.fromRGB(120, 120, 130), Cover = 0.9, Density = 0.8 }, Terrain) end
 
     elseif shaderId == 14 then
-        CreateEffect("ColorCorrectionEffect", { Contrast = 0.2, Saturation = 0.3, TintColor = Color3.fromRGB(255, 235, 215) })
-        CreateEffect("Atmosphere", { Density = 0.35, Offset = 0.25, Color = Color3.fromRGB(255, 120, 50), Decay = Color3.fromRGB(150, 50, 20), Glare = 0.7, Haze = 4 })
-        CreateEffect("Sky", { SunAngularSize = 12 })
-        CreateEffect("SunRaysEffect", { Intensity = 0.5, Spread = 0.8 })
-        CreateEffect("BloomEffect", { Intensity = 0.4, Size = 24, Threshold = 1.2 })
+        CreateEffect("ColorCorrectionEffect", { Contrast = 0.1, Saturation = 0.3, Brightness = -0.05, TintColor = Color3.fromRGB(255, 235, 215) })
+        CreateEffect("Atmosphere", { Density = 0.35, Offset = 0.25, Color = Color3.fromRGB(255, 120, 50), Decay = Color3.fromRGB(150, 50, 20), Glare = 0, Haze = 4 })
+        CreateEffect("Sky", { SunAngularSize = 9 })
+        CreateEffect("SunRaysEffect", { Intensity = 0.15, Spread = 0.6 })
+        CreateEffect("BloomEffect", { Intensity = 0.1, Size = 20, Threshold = 1.5 })
         CreateEffect("DepthOfFieldEffect", { FarIntensity = 0.15, NearIntensity = 0, FocusDistance = 25, InFocusRadius = 50 })
         if Terrain then CreateEffect("Clouds", { Color = Color3.fromRGB(255, 150, 100), Cover = 0.6, Density = 0.4 }, Terrain) end
 
