@@ -41,14 +41,21 @@ local UICorner_Toggle = Instance.new("UICorner")
 UICorner_Toggle.CornerRadius = UDim.new(1, 0)
 UICorner_Toggle.Parent = ToggleBtn
 
--- Gradasi Keren (Biru ke Ungu)
+-- Gradasi Putih ke Hitam
 local UIGradient_Toggle = Instance.new("UIGradient")
 UIGradient_Toggle.Color = ColorSequence.new{
-    ColorSequenceKeypoint.new(0.00, Color3.fromRGB(70, 70, 220)),
-    ColorSequenceKeypoint.new(1.00, Color3.fromRGB(150, 50, 200))
+    ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 255, 255)),
+    ColorSequenceKeypoint.new(1.00, Color3.fromRGB(15, 15, 15))
 }
 UIGradient_Toggle.Rotation = 45
 UIGradient_Toggle.Parent = ToggleBtn
+
+-- Outline Teks Hitam agar huruf 'W' tetap terbaca di bagian yang putih
+local UIStroke_Text = Instance.new("UIStroke")
+UIStroke_Text.Color = Color3.fromRGB(0, 0, 0)
+UIStroke_Text.Thickness = 1.5
+UIStroke_Text.ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual
+UIStroke_Text.Parent = ToggleBtn
 
 -- Garis Tepi Elegan
 local UIStroke_Toggle = Instance.new("UIStroke")
