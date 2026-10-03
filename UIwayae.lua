@@ -211,18 +211,55 @@ local ShaderLayout = Instance.new("UIListLayout")
 ShaderLayout.Parent = PageShader
 ShaderLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 ShaderLayout.SortOrder = Enum.SortOrder.LayoutOrder
-ShaderLayout.Padding = UDim.new(0, 15)
+ShaderLayout.Padding = UDim.new(0, 8) -- Dipersempit agar muat 5 tombol
+
 local ShaderPadding = Instance.new("UIPadding")
 ShaderPadding.Parent = PageShader
-ShaderPadding.PaddingTop = UDim.new(0, 20)
+ShaderPadding.PaddingTop = UDim.new(0, 10)
+
 local LabelShader = Instance.new("TextLabel")
 LabelShader.Size = UDim2.new(1, 0, 0, 30)
 LabelShader.BackgroundTransparency = 1
-LabelShader.Text = "Menu Shader"
+LabelShader.Text = "Custom Shader"
 LabelShader.TextColor3 = Color3.fromRGB(255, 255, 255)
 LabelShader.Font = Enum.Font.GothamBold
 LabelShader.TextSize = 18
 LabelShader.Parent = PageShader
+
+local function CreateShaderButton(text, shaderId, color)
+    local btn = Instance.new("TextButton")
+    btn.Size = UDim2.new(0.8, 0, 0, 32)
+    btn.Text = text
+    btn.BackgroundColor3 = color or Color3.fromRGB(50, 50, 60)
+    btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    btn.Font = Enum.Font.GothamSemibold
+    btn.TextSize = 13
+    btn.Parent = PageShader
+    
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0, 6)
+    corner.Parent = btn
+    
+    btn.MouseButton1Click:Connect(function()
+        local success, ShaderModule = pcall(function()
+            return loadstring(game:HttpGet("https://raw.githubusercontent.com/ilyfauzan/WayaeHUB/main/ShaderManager.lua"))()
+        end)
+        
+        if success and type(ShaderModule) == "table" and ShaderModule.Apply then
+            ShaderModule.Apply(shaderId)
+        else
+            game:GetService("StarterGui"):SetCore("SendNotification", {
+                Title = "ERROR", Text = "Gagal memuat ShaderManager!", Duration = 5
+            })
+        end
+    end)
+end
+
+CreateShaderButton("✨ Shader 1 (Realism)", 1)
+CreateShaderButton("🌆 Shader 2 (Vibrant)", 2)
+CreateShaderButton("🌑 Shader 3 (Dark Mode)", 3)
+CreateShaderButton("🔥 Shader 4 (Cinematic)", 4)
+CreateShaderButton("❌ Matikan Shader", 0, Color3.fromRGB(200, 50, 50))
 
 
 -- Fungsi Pembantu untuk membuat Kotak Input
