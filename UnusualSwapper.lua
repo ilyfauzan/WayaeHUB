@@ -3,13 +3,11 @@ local rs = game:GetService("ReplicatedStorage")
 local starterGui = game:GetService("StarterGui")
 local Players = game:GetService("Players")
 
--- Kamus pintar untuk efek Unusual yang memiliki spasi
 local CustomNames = {
     ["MysticalTree"] = "Mystical Tree",
     ["AngelicRedemption"] = "Angelic Redemption"
 }
 
--- Inisialisasi loop background untuk Auto-Rename (Berbagi tabel _G yang sama dengan EmoteSwapper)
 if not _G.ActiveWayaeSwaps then
     _G.ActiveWayaeSwaps = {}
     task.spawn(function()
@@ -49,7 +47,6 @@ function UnusualSwapper.Swap(targetName, sourceName)
     local targetObj = nil
     local sourceObj = nil
 
-    -- Pencarian untuk Unusual lebih longgar daripada Emote
     for _, obj in ipairs(rs:GetDescendants()) do
         if not targetObj and obj.Name == targetName then
             targetObj = obj

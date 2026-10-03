@@ -2,7 +2,6 @@ local CoreGui = game:GetService("CoreGui")
 local RunService = game:GetService("RunService")
 local Players = game:GetService("Players")
 
--- Menentukan letak UI
 local parentUI = CoreGui
 if RunService:IsStudio() then
     parentUI = Players.LocalPlayer:WaitForChild("PlayerGui")
@@ -11,14 +10,10 @@ else
     if not success then parentUI = Players.LocalPlayer:WaitForChild("PlayerGui") end
 end
 
--- Hapus UI lama jika ada
 if parentUI:FindFirstChild("WayaeHUB_UI") then
     parentUI.WayaeHUB_UI:Destroy()
 end
 
--- =========================================
--- 1. MEMBUAT SCREEN GUI UTAMA
--- =========================================
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "WayaeHUB_UI"
 ScreenGui.Parent = parentUI
@@ -27,21 +22,19 @@ ScreenGui.ResetOnSpawn = false
 local ToggleBtn = Instance.new("TextButton")
 ToggleBtn.Name = "ToggleBtn"
 ToggleBtn.Size = UDim2.new(0, 50, 0, 50)
-ToggleBtn.Position = UDim2.new(0, 15, 0.5, -25) -- Posisi Kiri Tengah
+ToggleBtn.Position = UDim2.new(0, 15, 0.5, -25)
 ToggleBtn.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 ToggleBtn.Text = "W"
 ToggleBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-ToggleBtn.Font = Enum.Font.GothamBlack -- Font lebih garang
+ToggleBtn.Font = Enum.Font.GothamBlack
 ToggleBtn.TextSize = 24
 ToggleBtn.Draggable = true
 ToggleBtn.Parent = ScreenGui
 
--- Bulat sempurna
 local UICorner_Toggle = Instance.new("UICorner")
 UICorner_Toggle.CornerRadius = UDim.new(1, 0)
 UICorner_Toggle.Parent = ToggleBtn
 
--- Gradasi Putih ke Hitam
 local UIGradient_Toggle = Instance.new("UIGradient")
 UIGradient_Toggle.Color = ColorSequence.new{
     ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 255, 255)),
@@ -50,14 +43,12 @@ UIGradient_Toggle.Color = ColorSequence.new{
 UIGradient_Toggle.Rotation = 45
 UIGradient_Toggle.Parent = ToggleBtn
 
--- Outline Teks Hitam agar huruf 'W' tetap terbaca di bagian yang putih
 local UIStroke_Text = Instance.new("UIStroke")
 UIStroke_Text.Color = Color3.fromRGB(0, 0, 0)
 UIStroke_Text.Thickness = 1.5
 UIStroke_Text.ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual
 UIStroke_Text.Parent = ToggleBtn
 
--- Garis Tepi Elegan
 local UIStroke_Toggle = Instance.new("UIStroke")
 UIStroke_Toggle.Color = Color3.fromRGB(255, 255, 255)
 UIStroke_Toggle.Thickness = 2
@@ -126,9 +117,6 @@ ToggleBtn.MouseButton1Click:Connect(function()
     MainFrame.Visible = not MainFrame.Visible
 end)
 
--- =========================================
--- 2. SIDEBAR (Menu Kiri)
--- =========================================
 local Sidebar = Instance.new("Frame")
 Sidebar.Name = "Sidebar"
 Sidebar.Size = UDim2.new(0, 130, 1, -35)
@@ -148,9 +136,6 @@ UIPadding.PaddingLeft = UDim.new(0, 10)
 UIPadding.PaddingRight = UDim.new(0, 10)
 UIPadding.Parent = Sidebar
 
--- =========================================
--- 3. KONTEN UTAMA (Area Kanan)
--- =========================================
 local ContentArea = Instance.new("Frame")
 ContentArea.Name = "ContentArea"
 ContentArea.Size = UDim2.new(1, -130, 1, -35)
@@ -200,11 +185,7 @@ local function CreateMenuButton(text, pageName)
     return Btn
 end
 
--- =========================================
--- 4. SETUP HALAMAN & TAB
--- =========================================
 
--- Tab 0: Home (Welcome Screen)
 local PageHome = CreatePage("HomePage")
 local BtnHome = CreateMenuButton("Home", "HomePage")
 
@@ -234,14 +215,13 @@ WelcomeSub.TextSize = 13
 WelcomeSub.TextWrapped = true
 WelcomeSub.Parent = PageHome
 
--- Tab 1: Shader (Menggunakan ScrollingFrame karena isinya banyak)
 local PageShader = Instance.new("ScrollingFrame")
 PageShader.Name = "ShaderPage"
 PageShader.Size = UDim2.new(1, 0, 1, 0)
 PageShader.BackgroundTransparency = 1
 PageShader.Visible = false
 PageShader.ScrollBarThickness = 4
-PageShader.CanvasSize = UDim2.new(0, 0, 0, 500) -- Ukuran pasti agar tidak stuck
+PageShader.CanvasSize = UDim2.new(0, 0, 0, 500)
 PageShader.Parent = ContentArea
 Pages["ShaderPage"] = PageShader
 
@@ -250,7 +230,7 @@ local ShaderLayout = Instance.new("UIListLayout")
 ShaderLayout.Parent = PageShader
 ShaderLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 ShaderLayout.SortOrder = Enum.SortOrder.LayoutOrder
-ShaderLayout.Padding = UDim.new(0, 8) -- Dipersempit agar muat 5 tombol
+ShaderLayout.Padding = UDim.new(0, 8)
 
 local ShaderPadding = Instance.new("UIPadding")
 ShaderPadding.Parent = PageShader
@@ -312,7 +292,6 @@ CreateShaderButton("🌃 Shader 15 (Midnight 8K Neon)", 15)
 CreateShaderButton("❌ Matikan Shader", 0, Color3.fromRGB(200, 50, 50))
 
 
--- Fungsi Pembantu untuk membuat Kotak Input
 local function CreateTextBox(parent, placeholder)
     local box = Instance.new("TextBox")
     box.Size = UDim2.new(0.9, 0, 0, 35)
@@ -321,7 +300,7 @@ local function CreateTextBox(parent, placeholder)
     box.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
     box.TextColor3 = Color3.fromRGB(255, 255, 255)
     box.Font = Enum.Font.Gotham
-    box.TextSize = 11 -- Diperkecil agar tulisan panjang tidak terpotong
+    box.TextSize = 11
     box.TextXAlignment = Enum.TextXAlignment.Left
     box.Parent = parent
     local pad = Instance.new("UIPadding")
@@ -333,9 +312,6 @@ local function CreateTextBox(parent, placeholder)
     return box
 end
 
--- ========================================================
--- Tab 2: Emote
--- ========================================================
 local PageEmote = CreatePage("EmotePage")
 local BtnEmote = CreateMenuButton("Emote", "EmotePage")
 
@@ -393,9 +369,6 @@ BtnExecuteSwap.MouseButton1Click:Connect(function()
 end)
 
 
--- ========================================================
--- Tab 3: Unusual
--- ========================================================
 local PageUnusual = CreatePage("UnusualPage")
 local BtnUnusual = CreateMenuButton("Unusual", "UnusualPage")
 
@@ -453,9 +426,6 @@ BtnExecUnusual.MouseButton1Click:Connect(function()
 end)
 
 
--- =========================================
--- 5. INISIALISASI
--- =========================================
 Pages["HomePage"].Visible = true
 BtnHome.BackgroundColor3 = Color3.fromRGB(70, 70, 220)
 BtnHome.TextColor3 = Color3.fromRGB(255, 255, 255)
