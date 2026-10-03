@@ -221,7 +221,8 @@ PageShader.Size = UDim2.new(1, 0, 1, 0)
 PageShader.BackgroundTransparency = 1
 PageShader.Visible = false
 PageShader.ScrollBarThickness = 4
-PageShader.CanvasSize = UDim2.new(0, 0, 0, 500)
+PageShader.AutomaticCanvasSize = Enum.AutomaticSize.Y
+PageShader.CanvasSize = UDim2.new(0, 0, 0, 0)
 PageShader.Parent = ContentArea
 Pages["ShaderPage"] = PageShader
 
