@@ -87,6 +87,48 @@ function ShaderManager.Apply(shaderId)
             Size = 45,
             Threshold = 1.5 
         })
+        
+    elseif shaderId == 5 then
+        -- Winter Chill (Beku, Biru Terang, Kecerahan Tinggi)
+        CreateEffect("ColorCorrectionEffect", { 
+            Brightness = 0.05, Contrast = 0.2, Saturation = -0.2, TintColor = Color3.fromRGB(200, 240, 255) 
+        })
+        CreateEffect("BloomEffect", { Intensity = 0.5, Size = 24 })
+        
+    elseif shaderId == 6 then
+        -- Toxic Wasteland (Nuansa Hijau Asam/Radioaktif)
+        CreateEffect("ColorCorrectionEffect", { 
+            Brightness = -0.1, Contrast = 0.3, Saturation = 0.5, TintColor = Color3.fromRGB(150, 255, 150) 
+        })
+        CreateEffect("BloomEffect", { Intensity = 0.8, Size = 30 })
+        
+    elseif shaderId == 7 then
+        -- Black & White (Hitam Putih Klasik)
+        CreateEffect("ColorCorrectionEffect", { 
+            Brightness = 0, Contrast = 0.5, Saturation = -1, TintColor = Color3.fromRGB(255, 255, 255) 
+        })
+        
+    elseif shaderId == 8 then
+        -- Hellfire (Merah Pekat, Gelap, Silau Api)
+        CreateEffect("ColorCorrectionEffect", { 
+            Brightness = -0.2, Contrast = 0.6, Saturation = 1.0, TintColor = Color3.fromRGB(255, 100, 100) 
+        })
+        CreateEffect("BloomEffect", { Intensity = 1.0, Size = 50 })
+        
+    elseif shaderId == 9 then
+        -- Desert Mirage (Panas, Kuning, Berbayang/Blur)
+        CreateEffect("ColorCorrectionEffect", { 
+            Brightness = 0.1, Contrast = 0.3, Saturation = 0.3, TintColor = Color3.fromRGB(255, 240, 180) 
+        })
+        CreateEffect("BlurEffect", { Size = 1.5 })
+        CreateEffect("SunRaysEffect", { Intensity = 0.2, Spread = 1.0 })
+        
+    elseif shaderId == 10 then
+        -- Void Galaxy (Ungu Gelap, Neon Tajam)
+        CreateEffect("ColorCorrectionEffect", { 
+            Brightness = -0.25, Contrast = 0.7, Saturation = 1.5, TintColor = Color3.fromRGB(180, 100, 255) 
+        })
+        CreateEffect("BloomEffect", { Intensity = 1.5, Size = 40, Threshold = 1.5 })
     end
     
     game:GetService("StarterGui"):SetCore("SendNotification", {

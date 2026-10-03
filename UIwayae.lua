@@ -234,8 +234,17 @@ WelcomeSub.TextSize = 13
 WelcomeSub.TextWrapped = true
 WelcomeSub.Parent = PageHome
 
--- Tab 1: Shader
-local PageShader = CreatePage("ShaderPage")
+-- Tab 1: Shader (Menggunakan ScrollingFrame karena isinya banyak)
+local PageShader = Instance.new("ScrollingFrame")
+PageShader.Name = "ShaderPage"
+PageShader.Size = UDim2.new(1, 0, 1, 0)
+PageShader.BackgroundTransparency = 1
+PageShader.Visible = false
+PageShader.ScrollBarThickness = 4
+PageShader.CanvasSize = UDim2.new(0, 0, 1.5, 0) -- Area scroll diperbesar
+PageShader.Parent = ContentArea
+Pages["ShaderPage"] = PageShader
+
 local BtnShader = CreateMenuButton("Shader", "ShaderPage")
 local ShaderLayout = Instance.new("UIListLayout")
 ShaderLayout.Parent = PageShader
@@ -289,6 +298,12 @@ CreateShaderButton("🌅 Shader 1 (Golden Glow)", 1)
 CreateShaderButton("🌙 Shader 2 (Midnight Velvet)", 2)
 CreateShaderButton("🍂 Shader 3 (Melancholy)", 3)
 CreateShaderButton("🔮 Shader 4 (Cyber Neon)", 4)
+CreateShaderButton("🥶 Shader 5 (Winter Chill)", 5)
+CreateShaderButton("🌿 Shader 6 (Toxic Wasteland)", 6)
+CreateShaderButton("🎭 Shader 7 (Black & White)", 7)
+CreateShaderButton("🔥 Shader 8 (Hellfire)", 8)
+CreateShaderButton("☀️ Shader 9 (Desert Mirage)", 9)
+CreateShaderButton("🌌 Shader 10 (Void Galaxy)", 10)
 CreateShaderButton("❌ Matikan Shader", 0, Color3.fromRGB(200, 50, 50))
 
 
