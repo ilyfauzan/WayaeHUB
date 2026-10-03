@@ -27,93 +27,69 @@ function ShaderManager.Apply(shaderId)
     end
 
     if shaderId == 1 then
-        -- Golden Glow (Golden hour, hangat, pencahayaan dramatis)
-        CreateEffect("ColorCorrectionEffect", { 
-            Brightness = 0.1, Contrast = 0.35, Saturation = 0.4, TintColor = Color3.fromRGB(255, 235, 180) 
-        })
-        CreateEffect("BloomEffect", { Intensity = 1.2, Size = 24, Threshold = 0.9 })
-        CreateEffect("SunRaysEffect", { Intensity = 0.8, Spread = 1.0 })
-        CreateEffect("DepthOfFieldEffect", { FarIntensity = 0.25, FocusDistance = 30, InFocusRadius = 20 })
+        -- Golden Glow (Fokus pada langit senja, awan hangat)
+        CreateEffect("ColorCorrectionEffect", { Contrast = 0.1, Saturation = 0.2, TintColor = Color3.fromRGB(255, 255, 255) })
+        CreateEffect("Atmosphere", { Density = 0.3, Offset = 0.25, Color = Color3.fromRGB(255, 170, 100), Decay = Color3.fromRGB(255, 100, 0), Glare = 1, Haze = 1 })
+        CreateEffect("Sky", { SunAngularSize = 15, MoonAngularSize = 11 })
+        CreateEffect("SunRaysEffect", { Intensity = 0.5, Spread = 0.8 })
+        CreateEffect("BloomEffect", { Intensity = 0.2, Size = 24, Threshold = 2.0 })
 
     elseif shaderId == 2 then
-        -- Midnight Velvet (Gelap misterius, biru dalam, cahaya berpendar kuat)
-        CreateEffect("ColorCorrectionEffect", { 
-            Brightness = -0.15, Contrast = 0.5, Saturation = 0.1, TintColor = Color3.fromRGB(140, 160, 255) 
-        })
-        CreateEffect("BloomEffect", { Intensity = 1.5, Size = 35, Threshold = 1.1 })
-        CreateEffect("SunRaysEffect", { Intensity = 0.3, Spread = 0.4 })
-        CreateEffect("DepthOfFieldEffect", { FarIntensity = 0.5, FocusDistance = 25, InFocusRadius = 15 })
+        -- Midnight Velvet (Langit malam berbintang, gelap jernih)
+        CreateEffect("ColorCorrectionEffect", { Contrast = 0.15, Saturation = -0.1, TintColor = Color3.fromRGB(255, 255, 255) })
+        CreateEffect("Atmosphere", { Density = 0.3, Color = Color3.fromRGB(20, 30, 60), Decay = Color3.fromRGB(10, 15, 30), Glare = 0, Haze = 0 })
+        CreateEffect("Sky", { StarCount = 5000, MoonAngularSize = 15, CelestialBodiesShown = true })
+        CreateEffect("BloomEffect", { Intensity = 0.2, Size = 15, Threshold = 1.5 })
         
     elseif shaderId == 3 then
-        -- Autumn Melancholy (Sinematik jingga kemerahan, dreamy, fokus kuat)
-        CreateEffect("ColorCorrectionEffect", { 
-            Brightness = -0.05, Contrast = 0.35, Saturation = 0.6, TintColor = Color3.fromRGB(255, 170, 100) 
-        })
-        CreateEffect("BloomEffect", { Intensity = 0.9, Size = 22, Threshold = 1.2 })
-        CreateEffect("BlurEffect", { Size = 2 })
-        CreateEffect("DepthOfFieldEffect", { FarIntensity = 0.6, FocusDistance = 20, InFocusRadius = 15 })
-        
-    elseif shaderId == 4 then
-        -- Cyber Neon (Mencolok, cyberpunk, kontras warna ekstrim)
-        CreateEffect("ColorCorrectionEffect", { 
-            Brightness = 0.05, Contrast = 0.6, Saturation = 1.5, TintColor = Color3.fromRGB(255, 150, 255) 
-        })
-        CreateEffect("BloomEffect", { Intensity = 2.5, Size = 50, Threshold = 0.4 })
-        CreateEffect("DepthOfFieldEffect", { FarIntensity = 0.2, FocusDistance = 40, InFocusRadius = 30 })
-        
-    elseif shaderId == 5 then
-        -- Winter Chill (Tajam, membeku, biru es jernih)
-        CreateEffect("ColorCorrectionEffect", { 
-            Brightness = 0.15, Contrast = 0.45, Saturation = -0.5, TintColor = Color3.fromRGB(190, 240, 255) 
-        })
-        CreateEffect("BloomEffect", { Intensity = 0.8, Size = 15, Threshold = 1.5 })
-        CreateEffect("SunRaysEffect", { Intensity = 0.5, Spread = 0.8 })
+        -- Autumn Melancholy (Langit jingga pudar, horizon dramatis)
+        CreateEffect("ColorCorrectionEffect", { Contrast = 0.1, Saturation = 0.1, TintColor = Color3.fromRGB(255, 255, 255) })
+        CreateEffect("Atmosphere", { Density = 0.4, Color = Color3.fromRGB(200, 120, 80), Decay = Color3.fromRGB(150, 70, 40), Glare = 0.5, Haze = 1.5 })
         CreateEffect("DepthOfFieldEffect", { FarIntensity = 0.1, FocusDistance = 50, InFocusRadius = 50 })
         
+    elseif shaderId == 4 then
+        -- Cyber Neon (Kabut ungu/biru, menonjolkan cahaya neon)
+        CreateEffect("ColorCorrectionEffect", { Contrast = 0.2, Saturation = 0.3, TintColor = Color3.fromRGB(255, 255, 255) })
+        CreateEffect("Atmosphere", { Density = 0.35, Color = Color3.fromRGB(100, 50, 200), Decay = Color3.fromRGB(255, 50, 150), Glare = 0, Haze = 1 })
+        CreateEffect("Sky", { StarCount = 3000 })
+        CreateEffect("BloomEffect", { Intensity = 0.5, Size = 24, Threshold = 0.8 })
+        
+    elseif shaderId == 5 then
+        -- Winter Chill (Langit pagi musim dingin yang cerah dan dingin)
+        CreateEffect("ColorCorrectionEffect", { Contrast = 0.2, Saturation = -0.2, TintColor = Color3.fromRGB(255, 255, 255) })
+        CreateEffect("Atmosphere", { Density = 0.4, Color = Color3.fromRGB(200, 230, 255), Decay = Color3.fromRGB(150, 180, 255), Glare = 0.5, Haze = 2 })
+        CreateEffect("SunRaysEffect", { Intensity = 0.3, Spread = 0.5 })
+        
     elseif shaderId == 6 then
-        -- Toxic Wasteland (Kotor, hijau menyala, beracun, pandangan kabur)
-        CreateEffect("ColorCorrectionEffect", { 
-            Brightness = -0.1, Contrast = 0.7, Saturation = 0.4, TintColor = Color3.fromRGB(180, 255, 120) 
-        })
-        CreateEffect("BloomEffect", { Intensity = 1.3, Size = 28, Threshold = 0.7 })
-        CreateEffect("BlurEffect", { Size = 4 })
-        CreateEffect("DepthOfFieldEffect", { FarIntensity = 0.8, FocusDistance = 15, InFocusRadius = 10 })
+        -- Toxic Wasteland (Kabut hijau beracun di kejauhan)
+        CreateEffect("ColorCorrectionEffect", { Contrast = 0.1, Saturation = 0, TintColor = Color3.fromRGB(255, 255, 255) })
+        CreateEffect("Atmosphere", { Density = 0.5, Color = Color3.fromRGB(100, 150, 100), Decay = Color3.fromRGB(50, 80, 50), Glare = 0, Haze = 3 })
+        CreateEffect("BlurEffect", { Size = 2 })
         
     elseif shaderId == 7 then
-        -- Noir Film (Hitam Putih dramatis, kontras ekstrim layaknya film jadul)
-        CreateEffect("ColorCorrectionEffect", { 
-            Brightness = -0.05, Contrast = 0.9, Saturation = -1, TintColor = Color3.fromRGB(255, 255, 255) 
-        })
-        CreateEffect("BloomEffect", { Intensity = 1.0, Size = 18, Threshold = 0.8 })
-        CreateEffect("BlurEffect", { Size = 2 })
-        CreateEffect("DepthOfFieldEffect", { FarIntensity = 0.4, FocusDistance = 20, InFocusRadius = 20 })
+        -- Noir Film (Estetika film klasik tanpa merusak warna UI, kabut tebal)
+        CreateEffect("ColorCorrectionEffect", { Contrast = 0.5, Saturation = -1, TintColor = Color3.fromRGB(255, 255, 255) })
+        CreateEffect("Atmosphere", { Density = 0.4, Color = Color3.fromRGB(100, 100, 100), Decay = Color3.fromRGB(50, 50, 50), Glare = 0, Haze = 2 })
         
     elseif shaderId == 8 then
-        -- Hellfire (Apokaliptik, merah menyala, gelap, panas)
-        CreateEffect("ColorCorrectionEffect", { 
-            Brightness = -0.2, Contrast = 0.85, Saturation = 0.9, TintColor = Color3.fromRGB(255, 60, 40) 
-        })
-        CreateEffect("BloomEffect", { Intensity = 2.0, Size = 40, Threshold = 0.5 })
-        CreateEffect("SunRaysEffect", { Intensity = 1.0, Spread = 1.2 })
-        CreateEffect("DepthOfFieldEffect", { FarIntensity = 0.5, FocusDistance = 25, InFocusRadius = 20 })
+        -- Hellfire (Langit kiamat, merah dan berhaze tinggi)
+        CreateEffect("ColorCorrectionEffect", { Contrast = 0.2, Saturation = 0.1, TintColor = Color3.fromRGB(255, 255, 255) })
+        CreateEffect("Atmosphere", { Density = 0.6, Color = Color3.fromRGB(150, 30, 20), Decay = Color3.fromRGB(80, 10, 10), Glare = 1, Haze = 2 })
+        CreateEffect("Sky", { SunAngularSize = 25 })
+        CreateEffect("BloomEffect", { Intensity = 0.3, Size = 20, Threshold = 1.5 })
         
     elseif shaderId == 9 then
-        -- Desert Mirage (Sangat panas terik, silau, blur efek fatamorgana ekstrim)
-        CreateEffect("ColorCorrectionEffect", { 
-            Brightness = 0.25, Contrast = 0.5, Saturation = 0.7, TintColor = Color3.fromRGB(255, 220, 160) 
-        })
-        CreateEffect("BloomEffect", { Intensity = 1.5, Size = 30, Threshold = 0.7 })
-        CreateEffect("SunRaysEffect", { Intensity = 0.9, Spread = 0.9 })
-        CreateEffect("BlurEffect", { Size = 5 })
-        CreateEffect("DepthOfFieldEffect", { FarIntensity = 0.9, FocusDistance = 10, InFocusRadius = 5 })
+        -- Desert Mirage (Cahaya silau, horizon berdebu/panas)
+        CreateEffect("ColorCorrectionEffect", { Contrast = 0.15, Saturation = 0.1, TintColor = Color3.fromRGB(255, 255, 255) })
+        CreateEffect("Atmosphere", { Density = 0.3, Color = Color3.fromRGB(255, 230, 180), Decay = Color3.fromRGB(200, 170, 130), Glare = 2, Haze = 3 })
+        CreateEffect("SunRaysEffect", { Intensity = 0.8, Spread = 1.0 })
         
     elseif shaderId == 10 then
-        -- Void Galaxy (Hanya objek bercahaya yang terlihat terang benderang)
-        CreateEffect("ColorCorrectionEffect", { 
-            Brightness = -0.3, Contrast = 1.0, Saturation = 0.8, TintColor = Color3.fromRGB(200, 100, 255) 
-        })
-        CreateEffect("BloomEffect", { Intensity = 3.0, Size = 56, Threshold = 0.2 })
-        CreateEffect("DepthOfFieldEffect", { FarIntensity = 0.3, FocusDistance = 30, InFocusRadius = 25 })
+        -- Void Galaxy (Luar angkasa, jarak pandang bersih tapi gelap)
+        CreateEffect("ColorCorrectionEffect", { Contrast = 0.3, Saturation = 0.2, TintColor = Color3.fromRGB(255, 255, 255) })
+        CreateEffect("Atmosphere", { Density = 0.8, Color = Color3.fromRGB(5, 5, 10), Decay = Color3.fromRGB(0, 0, 5), Glare = 0, Haze = 0 })
+        CreateEffect("Sky", { StarCount = 10000, SunAngularSize = 0, MoonAngularSize = 20, CelestialBodiesShown = true })
+        CreateEffect("BloomEffect", { Intensity = 0.5, Size = 30, Threshold = 0.8 })
     end
     
     game:GetService("StarterGui"):SetCore("SendNotification", {
