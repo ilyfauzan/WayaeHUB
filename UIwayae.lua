@@ -7,12 +7,11 @@ local parentUI = CoreGui
 if RunService:IsStudio() then
     parentUI = Players.LocalPlayer:WaitForChild("PlayerGui")
 else
-    -- Gunakan pcall agar tidak error jika CoreGui tidak dapat diakses
     local success = pcall(function() return CoreGui.Name end)
     if not success then parentUI = Players.LocalPlayer:WaitForChild("PlayerGui") end
 end
 
--- Hapus UI lama jika ada biar tidak bertumpuk saat script dijalankan ulang
+-- Hapus UI lama jika ada biar tidak bertumpuk
 if parentUI:FindFirstChild("WayaeHUB_UI") then
     parentUI.WayaeHUB_UI:Destroy()
 end
@@ -25,7 +24,6 @@ ScreenGui.Name = "WayaeHUB_UI"
 ScreenGui.Parent = parentUI
 ScreenGui.ResetOnSpawn = false
 
--- Frame Utama (Background)
 local MainFrame = Instance.new("Frame")
 MainFrame.Name = "MainFrame"
 MainFrame.Size = UDim2.new(0, 500, 0, 300)
@@ -33,15 +31,13 @@ MainFrame.Position = UDim2.new(0.5, -250, 0.5, -150)
 MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
 MainFrame.BorderSizePixel = 0
 MainFrame.Active = true
-MainFrame.Draggable = true -- Membuat UI bisa digeser dengan mouse
+MainFrame.Draggable = true
 MainFrame.Parent = ScreenGui
 
--- UI Corner agar membulat
 local UICorner_Main = Instance.new("UICorner")
 UICorner_Main.CornerRadius = UDim.new(0, 8)
 UICorner_Main.Parent = MainFrame
 
--- Top Bar (Judul)
 local TopBar = Instance.new("Frame")
 TopBar.Name = "TopBar"
 TopBar.Size = UDim2.new(1, 0, 0, 35)
@@ -53,7 +49,6 @@ local UICorner_Top = Instance.new("UICorner")
 UICorner_Top.CornerRadius = UDim.new(0, 8)
 UICorner_Top.Parent = TopBar
 
--- Menutup bagian bawah corner topbar agar menyambung dengan MainFrame
 local TopBarHider = Instance.new("Frame")
 TopBarHider.Size = UDim2.new(1, 0, 0, 8)
 TopBarHider.Position = UDim2.new(0, 0, 1, -8)
@@ -72,7 +67,6 @@ Title.TextSize = 14
 Title.TextXAlignment = Enum.TextXAlignment.Left
 Title.Parent = TopBar
 
--- Tombol Close (X)
 local CloseBtn = Instance.new("TextButton")
 CloseBtn.Size = UDim2.new(0, 35, 0, 35)
 CloseBtn.Position = UDim2.new(1, -35, 0, 0)
@@ -97,13 +91,11 @@ Sidebar.BackgroundColor3 = Color3.fromRGB(25, 25, 30)
 Sidebar.BorderSizePixel = 0
 Sidebar.Parent = MainFrame
 
--- Menyusun tombol ke bawah secara otomatis
 local UIListLayout = Instance.new("UIListLayout")
 UIListLayout.Parent = Sidebar
 UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 UIListLayout.Padding = UDim.new(0, 5)
 
--- Memberikan jarak (Padding)
 local UIPadding = Instance.new("UIPadding")
 UIPadding.PaddingTop = UDim.new(0, 10)
 UIPadding.PaddingLeft = UDim.new(0, 10)
@@ -122,7 +114,6 @@ ContentArea.Parent = MainFrame
 
 local Pages = {}
 
--- Fungsi untuk membuat Halaman (Page) baru
 local function CreatePage(pageName)
     local PageFrame = Instance.new("Frame")
     PageFrame.Name = pageName
@@ -135,7 +126,6 @@ local function CreatePage(pageName)
     return PageFrame
 end
 
--- Fungsi untuk membuat Tombol Tab di Sidebar
 local function CreateMenuButton(text, pageName)
     local Btn = Instance.new("TextButton")
     Btn.Size = UDim2.new(1, 0, 0, 30)
@@ -150,29 +140,18 @@ local function CreateMenuButton(text, pageName)
     UICorner_Btn.CornerRadius = UDim.new(0, 6)
     UICorner_Btn.Parent = Btn
 
-    -- Logika saat tombol tab ditekan
     Btn.MouseButton1Click:Connect(function()
-        -- Sembunyikan semua halaman
-        for _, page in pairs(Pages) do
-            page.Visible = false
-        end
-        -- Tampilkan halaman yang sesuai
-        if Pages[pageName] then
-            Pages[pageName].Visible = true
-        end
-        
-        -- Kembalikan warna semua tombol ke warna asal
+        for _, page in pairs(Pages) do page.Visible = false end
+        if Pages[pageName] then Pages[pageName].Visible = true end
         for _, otherBtn in ipairs(Sidebar:GetChildren()) do
             if otherBtn:IsA("TextButton") then
                 otherBtn.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
                 otherBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
             end
         end
-        -- Jadikan warna tombol yang aktif menyala (Biru tua)
         Btn.BackgroundColor3 = Color3.fromRGB(70, 70, 220)
         Btn.TextColor3 = Color3.fromRGB(255, 255, 255)
     end)
-    
     return Btn
 end
 
@@ -180,10 +159,9 @@ end
 -- 4. SETUP HALAMAN & TAB
 -- =========================================
 
--- Tab 1: Shader
+-- Tab 1: Shader (Kosong untuk sementara)
 local PageShader = CreatePage("ShaderPage")
 local BtnShader = CreateMenuButton("Shader", "ShaderPage")
-
 local LabelShader = Instance.new("TextLabel")
 LabelShader.Size = UDim2.new(1, 0, 0, 30)
 LabelShader.Position = UDim2.new(0, 0, 0, 15)
@@ -194,24 +172,163 @@ LabelShader.Font = Enum.Font.GothamBold
 LabelShader.TextSize = 18
 LabelShader.Parent = PageShader
 
--- Tab 2: Emote
+-- ========================================================
+-- Tab 2: Emote (Dengan Inputan Dinamis)
+-- ========================================================
 local PageEmote = CreatePage("EmotePage")
 local BtnEmote = CreateMenuButton("Emote", "EmotePage")
 
 local LabelEmote = Instance.new("TextLabel")
 LabelEmote.Size = UDim2.new(1, 0, 0, 30)
-LabelEmote.Position = UDim2.new(0, 0, 0, 15)
+LabelEmote.Position = UDim2.new(0, 0, 0, 10)
 LabelEmote.BackgroundTransparency = 1
-LabelEmote.Text = "Menu Emote"
+LabelEmote.Text = "Custom Emote Swapper"
 LabelEmote.TextColor3 = Color3.fromRGB(255, 255, 255)
 LabelEmote.Font = Enum.Font.GothamBold
 LabelEmote.TextSize = 18
 LabelEmote.Parent = PageEmote
 
+-- Kotak Input 1: Emote yang mau diganti (Target)
+local InputTarget = Instance.new("TextBox")
+InputTarget.Size = UDim2.new(0.8, 0, 0, 35)
+InputTarget.Position = UDim2.new(0.1, 0, 0, 50)
+InputTarget.PlaceholderText = "Emote yang Anda miliki (Contoh: SwagWalk)"
+InputTarget.Text = ""
+InputTarget.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
+InputTarget.TextColor3 = Color3.fromRGB(255, 255, 255)
+InputTarget.Font = Enum.Font.Gotham
+InputTarget.TextSize = 13
+InputTarget.Parent = PageEmote
+local CornerTarget = Instance.new("UICorner")
+CornerTarget.CornerRadius = UDim.new(0, 6)
+CornerTarget.Parent = InputTarget
+
+-- Kotak Input 2: Emote pengganti (Source)
+local InputSource = Instance.new("TextBox")
+InputSource.Size = UDim2.new(0.8, 0, 0, 35)
+InputSource.Position = UDim2.new(0.1, 0, 0, 95)
+InputSource.PlaceholderText = "Emote pengganti (Contoh: RockinStride)"
+InputSource.Text = ""
+InputSource.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
+InputSource.TextColor3 = Color3.fromRGB(255, 255, 255)
+InputSource.Font = Enum.Font.Gotham
+InputSource.TextSize = 13
+InputSource.Parent = PageEmote
+local CornerSource = Instance.new("UICorner")
+CornerSource.CornerRadius = UDim.new(0, 6)
+CornerSource.Parent = InputSource
+
+-- Tombol Eksekusi
+local BtnExecuteSwap = Instance.new("TextButton")
+BtnExecuteSwap.Size = UDim2.new(0.5, 0, 0, 40)
+BtnExecuteSwap.Position = UDim2.new(0.25, 0, 0, 150)
+BtnExecuteSwap.Text = "Tukar Emote"
+BtnExecuteSwap.BackgroundColor3 = Color3.fromRGB(70, 200, 70)
+BtnExecuteSwap.TextColor3 = Color3.fromRGB(255, 255, 255)
+BtnExecuteSwap.Font = Enum.Font.GothamBold
+BtnExecuteSwap.TextSize = 14
+BtnExecuteSwap.Parent = PageEmote
+local CornerExecute = Instance.new("UICorner")
+CornerExecute.CornerRadius = UDim.new(0, 6)
+CornerExecute.Parent = BtnExecuteSwap
+
+-- Logika Swapper saat tombol ditekan
+BtnExecuteSwap.MouseButton1Click:Connect(function()
+    local targetName = InputTarget.Text
+    local sourceName = InputSource.Text
+    local rs = game:GetService("ReplicatedStorage")
+    local starterGui = game:GetService("StarterGui")
+    
+    if targetName == "" or sourceName == "" then
+        starterGui:SetCore("SendNotification", {Title = "ERROR", Text = "Harap isi kedua kotak!", Duration = 3})
+        return
+    end
+
+    local targetObj = nil
+    local sourceObj = nil
+
+    -- Mencari Target dan Source di ReplicatedStorage
+    for _, obj in ipairs(rs:GetDescendants()) do
+        if not targetObj and obj.Name == targetName and obj:IsA("ModuleScript") then
+            targetObj = obj
+        end
+        if not sourceObj and obj.Name == sourceName then
+            if (obj:IsA("Folder") or obj:IsA("ModuleScript")) and (obj:FindFirstChildWhichIsA("Animation", true) or obj:FindFirstChildWhichIsA("Sound", true) or obj:FindFirstChild("Animation")) then
+                sourceObj = obj
+            end
+        end
+    end
+
+    -- Jika dua-duanya ketemu, lakukan Pembedahan & Swap
+    if targetObj and sourceObj then
+        for _, child in ipairs(targetObj:GetChildren()) do
+            child:Destroy()
+        end
+        for _, child in ipairs(sourceObj:GetChildren()) do
+            child:Clone().Parent = targetObj
+        end
+
+        -- Salin Sound eksplisit jika tersedia
+        local sourceSound = sourceObj:FindFirstChildWhichIsA("Sound", true)
+        local targetSound = targetObj:FindFirstChildWhichIsA("Sound", true)
+        if sourceSound then
+            if targetSound then
+                targetSound.SoundId = sourceSound.SoundId
+                targetSound.Volume = sourceSound.Volume
+                targetSound.PlaybackSpeed = sourceSound.PlaybackSpeed
+            else
+                local clonedSound = sourceSound:Clone()
+                clonedSound.Parent = targetObj
+            end
+        end
+
+        -- Fungsi untuk memisahkan nama huruf besar agar nama UI berubah (Misal: SwagWalk -> Swag Walk)
+        local function addSpaces(str)
+            return string.gsub(str, "(%l)(%u)", "%1 %2")
+        end
+
+        local uiTargetStr = addSpaces(targetName)
+        local uiSourceStr = addSpaces(sourceName)
+
+        -- Tahap 2: Ganti Nama di UI
+        task.spawn(function()
+            local localPlayer = Players.LocalPlayer
+            local playerGui = localPlayer:WaitForChild("PlayerGui")
+            
+            -- Lakukan scan selama 10 detik agar tidak bikin memori penuh selamanya
+            for i = 1, 100 do
+                task.wait(0.1)
+                for _, obj in ipairs(playerGui:GetDescendants()) do
+                    if obj:IsA("TextLabel") and obj.Text ~= "" then
+                        if string.find(obj.Text, uiTargetStr) and not string.find(obj.Text, uiSourceStr) then
+                            obj.Text = string.gsub(obj.Text, uiTargetStr, uiSourceStr)
+                        end
+                    end
+                end
+            end
+        end)
+
+        starterGui:SetCore("SendNotification", {
+            Title = "🔥 SWAP SUKSES",
+            Text = "Berhasil menukar " .. targetName .. " menjadi " .. sourceName .. "!",
+            Duration = 5
+        })
+    else
+        -- Pesan Error
+        if not targetObj then
+            starterGui:SetCore("SendNotification", {Title = "GAGAL", Text = "Emote asal ("..targetName..") tidak ditemukan!", Duration = 5})
+        elseif not sourceObj then
+            starterGui:SetCore("SendNotification", {Title = "GAGAL", Text = "Emote pengganti ("..sourceName..") tidak ditemukan!", Duration = 5})
+        end
+    end
+end)
+
+
+-- ========================================================
 -- Tab 3: Unusual
+-- ========================================================
 local PageUnusual = CreatePage("UnusualPage")
 local BtnUnusual = CreateMenuButton("Unusual", "UnusualPage")
-
 local LabelUnusual = Instance.new("TextLabel")
 LabelUnusual.Size = UDim2.new(1, 0, 0, 30)
 LabelUnusual.Position = UDim2.new(0, 0, 0, 15)
@@ -226,7 +343,6 @@ LabelUnusual.Parent = PageUnusual
 -- =========================================
 -- 5. INISIALISASI
 -- =========================================
--- Buka halaman pertama (Shader) secara otomatis saat UI dimuat
 Pages["ShaderPage"].Visible = true
 BtnShader.BackgroundColor3 = Color3.fromRGB(70, 70, 220)
 BtnShader.TextColor3 = Color3.fromRGB(255, 255, 255)
