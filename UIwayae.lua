@@ -241,7 +241,7 @@ PageShader.Size = UDim2.new(1, 0, 1, 0)
 PageShader.BackgroundTransparency = 1
 PageShader.Visible = false
 PageShader.ScrollBarThickness = 4
-PageShader.CanvasSize = UDim2.new(0, 0, 1.5, 0) -- Area scroll diperbesar
+PageShader.CanvasSize = UDim2.new(0, 0, 0, 500) -- Ukuran pasti agar tidak stuck
 PageShader.Parent = ContentArea
 Pages["ShaderPage"] = PageShader
 

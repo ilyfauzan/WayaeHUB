@@ -1,140 +1,108 @@
 local ShaderManager = {}
 local Lighting = game:GetService("Lighting")
 
--- Fungsi untuk menghapus semua efek shader buatan WayaeHUB sebelumnya agar tidak bertumpuk
 local function ClearShaders()
     for _, obj in ipairs(Lighting:GetChildren()) do
-        -- Kita menghapus efek yang ditandai dengan attribute "WayaeShader"
         if obj:GetAttribute("WayaeShader") then
             obj:Destroy()
         end
     end
 end
 
--- Fungsi pembantu untuk membuat efek dengan cepat dan menandainya
 local function CreateEffect(className, properties)
     local effect = Instance.new(className)
     for k, v in pairs(properties) do
         effect[k] = v
     end
-    effect:SetAttribute("WayaeShader", true) -- Ini kuncinya agar nanti gampang dihapus
+    effect:SetAttribute("WayaeShader", true)
     effect.Parent = Lighting
 end
 
 function ShaderManager.Apply(shaderId)
-    ClearShaders() -- Selalu bersihkan efek lama sebelum pasang yang baru
+    ClearShaders()
     
     if shaderId == 0 then
-        -- Hanya mematikan shader (Clear)
         game:GetService("StarterGui"):SetCore("SendNotification", {Title = "Shader", Text = "Shader dimatikan.", Duration = 3})
         return
     end
 
     if shaderId == 1 then
-        -- Golden Glow (Terinspirasi dari Minecraft Shader saat Sunset)
+        -- Golden Glow (Realistis, sedikit hangat, bloom elegan, DepthOfField)
         CreateEffect("ColorCorrectionEffect", { 
-            Brightness = 0.05, 
-            Contrast = 0.15, 
-            Saturation = 0.4,
-            TintColor = Color3.fromRGB(255, 225, 205) -- Warna senja (Golden-Pinkish)
+            Contrast = 0.1, Saturation = 0.2, TintColor = Color3.fromRGB(255, 248, 240) 
         })
-        CreateEffect("BloomEffect", { 
-            Intensity = 0.6, 
-            Size = 35, 
-            Threshold = 1.2 
-        })
-        CreateEffect("SunRaysEffect", { 
-            Intensity = 0.15, 
-            Spread = 0.7 
-        })
-        
+        CreateEffect("BloomEffect", { Intensity = 0.2, Size = 24, Threshold = 2.0 })
+        CreateEffect("SunRaysEffect", { Intensity = 0.15, Spread = 0.5 })
+        CreateEffect("DepthOfFieldEffect", { FarIntensity = 0.1, FocusDistance = 50, InFocusRadius = 50 })
+
     elseif shaderId == 2 then
-        -- Midnight Velvet (Suasana Malam Biru Elegan & Dingin)
+        -- Midnight Velvet (Dingin elegan, tidak sekedar biru pekat)
         CreateEffect("ColorCorrectionEffect", { 
-            Brightness = -0.15, 
-            Contrast = 0.35, 
-            Saturation = 0.1,
-            TintColor = Color3.fromRGB(160, 180, 255)
+            Contrast = 0.2, Saturation = -0.1, TintColor = Color3.fromRGB(240, 245, 255) 
         })
-        CreateEffect("BloomEffect", { 
-            Intensity = 0.7, 
-            Size = 24, 
-            Threshold = 1.0 
-        })
+        CreateEffect("BloomEffect", { Intensity = 0.15, Size = 15, Threshold = 1.5 })
+        CreateEffect("DepthOfFieldEffect", { FarIntensity = 0.15, FocusDistance = 25, InFocusRadius = 30 })
         
     elseif shaderId == 3 then
-        -- Autumn Melancholy (Sinematik Pudar / Drama Movie)
+        -- Autumn Melancholy (Sinematik, agak redup, fokus DOF kuat)
         CreateEffect("ColorCorrectionEffect", { 
-            Brightness = -0.05, 
-            Contrast = 0.45, 
-            Saturation = -0.5,
-            TintColor = Color3.fromRGB(240, 220, 200)
+            Brightness = -0.05, Contrast = 0.15, Saturation = -0.3, TintColor = Color3.fromRGB(255, 250, 240) 
         })
-        CreateEffect("BlurEffect", { 
-            Size = 2.5
-        })
+        CreateEffect("DepthOfFieldEffect", { FarIntensity = 0.2, FocusDistance = 20, InFocusRadius = 20 })
         
     elseif shaderId == 4 then
-        -- Cyber Neon (Super Vibrant, Glow Kuat, Estetika Neon/Magenta)
+        -- Cyber Neon (Mencolok tapi tidak merusak mata)
         CreateEffect("ColorCorrectionEffect", { 
-            Brightness = 0.05, 
-            Contrast = 0.25, 
-            Saturation = 1.3,
-            TintColor = Color3.fromRGB(255, 240, 255)
+            Contrast = 0.2, Saturation = 0.6, TintColor = Color3.fromRGB(250, 245, 255) 
         })
-        CreateEffect("BloomEffect", { 
-            Intensity = 1.2, 
-            Size = 45,
-            Threshold = 1.5 
-        })
+        CreateEffect("BloomEffect", { Intensity = 0.35, Size = 35, Threshold = 1.0 })
         
     elseif shaderId == 5 then
-        -- Winter Chill (Beku, Biru Terang, Kecerahan Tinggi)
+        -- Winter Chill (Tajam, jernih, kontras tinggi)
         CreateEffect("ColorCorrectionEffect", { 
-            Brightness = 0.05, Contrast = 0.2, Saturation = -0.2, TintColor = Color3.fromRGB(200, 240, 255) 
+            Contrast = 0.3, Saturation = -0.1, TintColor = Color3.fromRGB(245, 250, 255) 
         })
-        CreateEffect("BloomEffect", { Intensity = 0.5, Size = 24 })
+        CreateEffect("BloomEffect", { Intensity = 0.1, Size = 10 })
         
     elseif shaderId == 6 then
-        -- Toxic Wasteland (Nuansa Hijau Asam/Radioaktif)
+        -- Toxic Wasteland (Nuansa kotor/gritty, hijau sangat tipis)
         CreateEffect("ColorCorrectionEffect", { 
-            Brightness = -0.1, Contrast = 0.3, Saturation = 0.5, TintColor = Color3.fromRGB(150, 255, 150) 
+            Brightness = -0.05, Contrast = 0.25, Saturation = -0.2, TintColor = Color3.fromRGB(245, 255, 240) 
         })
-        CreateEffect("BloomEffect", { Intensity = 0.8, Size = 30 })
+        CreateEffect("DepthOfFieldEffect", { FarIntensity = 0.15, FocusDistance = 30, InFocusRadius = 40 })
         
     elseif shaderId == 7 then
-        -- Black & White (Hitam Putih Klasik)
+        -- Black & White (Film Hitam Putih Klasik)
         CreateEffect("ColorCorrectionEffect", { 
-            Brightness = 0, Contrast = 0.5, Saturation = -1, TintColor = Color3.fromRGB(255, 255, 255) 
+            Contrast = 0.4, Saturation = -1, TintColor = Color3.fromRGB(255, 255, 255) 
         })
+        CreateEffect("BloomEffect", { Intensity = 0.1, Size = 14 })
         
     elseif shaderId == 8 then
-        -- Hellfire (Merah Pekat, Gelap, Silau Api)
+        -- Hellfire (Kontras ekstrim, merah sangat tipis agar objek tetap terlihat natural)
         CreateEffect("ColorCorrectionEffect", { 
-            Brightness = -0.2, Contrast = 0.6, Saturation = 1.0, TintColor = Color3.fromRGB(255, 100, 100) 
+            Brightness = -0.1, Contrast = 0.4, Saturation = 0.3, TintColor = Color3.fromRGB(255, 240, 235) 
         })
-        CreateEffect("BloomEffect", { Intensity = 1.0, Size = 50 })
+        CreateEffect("BloomEffect", { Intensity = 0.25, Size = 20, Threshold = 1.8 })
         
     elseif shaderId == 9 then
-        -- Desert Mirage (Panas, Kuning, Berbayang/Blur)
+        -- Desert Mirage (Nuansa panas terik dengan efek blur DepthOfField ekstrim di kejauhan)
         CreateEffect("ColorCorrectionEffect", { 
-            Brightness = 0.1, Contrast = 0.3, Saturation = 0.3, TintColor = Color3.fromRGB(255, 240, 180) 
+            Contrast = 0.1, Saturation = 0.2, TintColor = Color3.fromRGB(255, 250, 230) 
         })
-        CreateEffect("BlurEffect", { Size = 1.5 })
-        CreateEffect("SunRaysEffect", { Intensity = 0.2, Spread = 1.0 })
+        CreateEffect("DepthOfFieldEffect", { FarIntensity = 0.25, FocusDistance = 15, InFocusRadius = 15 })
+        CreateEffect("SunRaysEffect", { Intensity = 0.25, Spread = 0.8 })
         
     elseif shaderId == 10 then
-        -- Void Galaxy (Ungu Gelap, Neon Tajam)
+        -- Void Galaxy (Gelap elegan, objek bercahaya/bloom akan menyala sangat terang)
         CreateEffect("ColorCorrectionEffect", { 
-            Brightness = -0.25, Contrast = 0.7, Saturation = 1.5, TintColor = Color3.fromRGB(180, 100, 255) 
+            Brightness = -0.15, Contrast = 0.35, Saturation = 0.2, TintColor = Color3.fromRGB(250, 245, 255) 
         })
-        CreateEffect("BloomEffect", { Intensity = 1.5, Size = 40, Threshold = 1.5 })
+        CreateEffect("BloomEffect", { Intensity = 0.5, Size = 30, Threshold = 0.8 })
     end
     
     game:GetService("StarterGui"):SetCore("SendNotification", {
-        Title = "✨ SHADER AKTIF",
-        Text = "Shader " .. shaderId .. " berhasil dipasang!",
-        Duration = 3
+        Title = "✨ SHADER AKTIF", Text = "Shader " .. shaderId .. " berhasil dipasang!", Duration = 3
     })
 end
 
