@@ -2,7 +2,7 @@ local CoreGui = game:GetService("CoreGui")
 local RunService = game:GetService("RunService")
 local Players = game:GetService("Players")
 
--- Menentukan letak UI (CoreGui untuk Executor, PlayerGui untuk Roblox Studio)
+-- Menentukan letak UI
 local parentUI = CoreGui
 if RunService:IsStudio() then
     parentUI = Players.LocalPlayer:WaitForChild("PlayerGui")
@@ -173,7 +173,7 @@ LabelShader.TextSize = 18
 LabelShader.Parent = PageShader
 
 -- ========================================================
--- Tab 2: Emote (Dengan Inputan Dinamis)
+-- Tab 2: Emote (Dengan Modul Terpisah)
 -- ========================================================
 local PageEmote = CreatePage("EmotePage")
 local BtnEmote = CreateMenuButton("Emote", "EmotePage")
@@ -199,9 +199,7 @@ InputTarget.TextColor3 = Color3.fromRGB(255, 255, 255)
 InputTarget.Font = Enum.Font.Gotham
 InputTarget.TextSize = 13
 InputTarget.Parent = PageEmote
-local CornerTarget = Instance.new("UICorner")
-CornerTarget.CornerRadius = UDim.new(0, 6)
-CornerTarget.Parent = InputTarget
+local CornerTarget = Instance.new("UICorner"); CornerTarget.CornerRadius = UDim.new(0, 6); CornerTarget.Parent = InputTarget
 
 -- Kotak Input 2: Emote pengganti (Source)
 local InputSource = Instance.new("TextBox")
@@ -214,9 +212,7 @@ InputSource.TextColor3 = Color3.fromRGB(255, 255, 255)
 InputSource.Font = Enum.Font.Gotham
 InputSource.TextSize = 13
 InputSource.Parent = PageEmote
-local CornerSource = Instance.new("UICorner")
-CornerSource.CornerRadius = UDim.new(0, 6)
-CornerSource.Parent = InputSource
+local CornerSource = Instance.new("UICorner"); CornerSource.CornerRadius = UDim.new(0, 6); CornerSource.Parent = InputSource
 
 -- Tombol Eksekusi
 local BtnExecuteSwap = Instance.new("TextButton")
@@ -228,98 +224,26 @@ BtnExecuteSwap.TextColor3 = Color3.fromRGB(255, 255, 255)
 BtnExecuteSwap.Font = Enum.Font.GothamBold
 BtnExecuteSwap.TextSize = 14
 BtnExecuteSwap.Parent = PageEmote
-local CornerExecute = Instance.new("UICorner")
-CornerExecute.CornerRadius = UDim.new(0, 6)
-CornerExecute.Parent = BtnExecuteSwap
+local CornerExecute = Instance.new("UICorner"); CornerExecute.CornerRadius = UDim.new(0, 6); CornerExecute.Parent = BtnExecuteSwap
 
--- Logika Swapper saat tombol ditekan
+-- Logika mengambil file EmoteSwapper.lua dari GitHub saat tombol ditekan
 BtnExecuteSwap.MouseButton1Click:Connect(function()
     local targetName = InputTarget.Text
     local sourceName = InputSource.Text
-    local rs = game:GetService("ReplicatedStorage")
-    local starterGui = game:GetService("StarterGui")
     
-    if targetName == "" or sourceName == "" then
-        starterGui:SetCore("SendNotification", {Title = "ERROR", Text = "Harap isi kedua kotak!", Duration = 3})
-        return
-    end
-
-    local targetObj = nil
-    local sourceObj = nil
-
-    -- Mencari Target dan Source di ReplicatedStorage
-    for _, obj in ipairs(rs:GetDescendants()) do
-        if not targetObj and obj.Name == targetName and obj:IsA("ModuleScript") then
-            targetObj = obj
-        end
-        if not sourceObj and obj.Name == sourceName then
-            if (obj:IsA("Folder") or obj:IsA("ModuleScript")) and (obj:FindFirstChildWhichIsA("Animation", true) or obj:FindFirstChildWhichIsA("Sound", true) or obj:FindFirstChild("Animation")) then
-                sourceObj = obj
-            end
-        end
-    end
-
-    -- Jika dua-duanya ketemu, lakukan Pembedahan & Swap
-    if targetObj and sourceObj then
-        for _, child in ipairs(targetObj:GetChildren()) do
-            child:Destroy()
-        end
-        for _, child in ipairs(sourceObj:GetChildren()) do
-            child:Clone().Parent = targetObj
-        end
-
-        -- Salin Sound eksplisit jika tersedia
-        local sourceSound = sourceObj:FindFirstChildWhichIsA("Sound", true)
-        local targetSound = targetObj:FindFirstChildWhichIsA("Sound", true)
-        if sourceSound then
-            if targetSound then
-                targetSound.SoundId = sourceSound.SoundId
-                targetSound.Volume = sourceSound.Volume
-                targetSound.PlaybackSpeed = sourceSound.PlaybackSpeed
-            else
-                local clonedSound = sourceSound:Clone()
-                clonedSound.Parent = targetObj
-            end
-        end
-
-        -- Fungsi untuk memisahkan nama huruf besar agar nama UI berubah (Misal: SwagWalk -> Swag Walk)
-        local function addSpaces(str)
-            return string.gsub(str, "(%l)(%u)", "%1 %2")
-        end
-
-        local uiTargetStr = addSpaces(targetName)
-        local uiSourceStr = addSpaces(sourceName)
-
-        -- Tahap 2: Ganti Nama di UI
-        task.spawn(function()
-            local localPlayer = Players.LocalPlayer
-            local playerGui = localPlayer:WaitForChild("PlayerGui")
-            
-            -- Lakukan scan selama 10 detik agar tidak bikin memori penuh selamanya
-            for i = 1, 100 do
-                task.wait(0.1)
-                for _, obj in ipairs(playerGui:GetDescendants()) do
-                    if obj:IsA("TextLabel") and obj.Text ~= "" then
-                        if string.find(obj.Text, uiTargetStr) and not string.find(obj.Text, uiSourceStr) then
-                            obj.Text = string.gsub(obj.Text, uiTargetStr, uiSourceStr)
-                        end
-                    end
-                end
-            end
-        end)
-
-        starterGui:SetCore("SendNotification", {
-            Title = "🔥 SWAP SUKSES",
-            Text = "Berhasil menukar " .. targetName .. " menjadi " .. sourceName .. "!",
+    -- Ambil modul logika secara dinamis (Terpisah agar rapi)
+    local success, EmoteModule = pcall(function()
+        return loadstring(game:HttpGet("https://raw.githubusercontent.com/ilyfauzan/WayaeHUB/main/EmoteSwapper.lua"))()
+    end)
+    
+    if success and type(EmoteModule) == "table" and EmoteModule.Swap then
+        EmoteModule.Swap(targetName, sourceName)
+    else
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = "ERROR",
+            Text = "Gagal memuat modul EmoteSwapper dari GitHub!",
             Duration = 5
         })
-    else
-        -- Pesan Error
-        if not targetObj then
-            starterGui:SetCore("SendNotification", {Title = "GAGAL", Text = "Emote asal ("..targetName..") tidak ditemukan!", Duration = 5})
-        elseif not sourceObj then
-            starterGui:SetCore("SendNotification", {Title = "GAGAL", Text = "Emote pengganti ("..sourceName..") tidak ditemukan!", Duration = 5})
-        end
     end
 end)
 
