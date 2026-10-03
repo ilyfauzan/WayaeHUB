@@ -42,7 +42,7 @@ UICorner_Toggle.Parent = ToggleBtn
 
 local MainFrame = Instance.new("Frame")
 MainFrame.Name = "MainFrame"
-MainFrame.Size = UDim2.new(0, 500, 0, 300) -- Ukuran dikembalikan karena input hanya 2
+MainFrame.Size = UDim2.new(0, 500, 0, 300)
 MainFrame.Position = UDim2.new(0.5, -250, 0.5, -150)
 MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
 MainFrame.BorderSizePixel = 0
@@ -200,8 +200,29 @@ LabelShader.TextSize = 18
 LabelShader.Parent = PageShader
 
 
+-- Fungsi Pembantu untuk membuat Kotak Input
+local function CreateTextBox(parent, placeholder)
+    local box = Instance.new("TextBox")
+    box.Size = UDim2.new(0.9, 0, 0, 35)
+    box.PlaceholderText = placeholder
+    box.Text = ""
+    box.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
+    box.TextColor3 = Color3.fromRGB(255, 255, 255)
+    box.Font = Enum.Font.Gotham
+    box.TextSize = 13
+    box.TextXAlignment = Enum.TextXAlignment.Left
+    box.Parent = parent
+    local pad = Instance.new("UIPadding")
+    pad.PaddingLeft = UDim.new(0, 10)
+    pad.Parent = box
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0, 6)
+    corner.Parent = box
+    return box
+end
+
 -- ========================================================
--- Tab 2: Emote (Kembali ke 2 Input)
+-- Tab 2: Emote
 -- ========================================================
 local PageEmote = CreatePage("EmotePage")
 local BtnEmote = CreateMenuButton("Emote", "EmotePage")
@@ -225,28 +246,8 @@ LabelEmote.Font = Enum.Font.GothamBold
 LabelEmote.TextSize = 18
 LabelEmote.Parent = PageEmote
 
-local function CreateTextBox(placeholder)
-    local box = Instance.new("TextBox")
-    box.Size = UDim2.new(0.9, 0, 0, 35)
-    box.PlaceholderText = placeholder
-    box.Text = ""
-    box.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
-    box.TextColor3 = Color3.fromRGB(255, 255, 255)
-    box.Font = Enum.Font.Gotham
-    box.TextSize = 13
-    box.TextXAlignment = Enum.TextXAlignment.Left
-    box.Parent = PageEmote
-    local pad = Instance.new("UIPadding")
-    pad.PaddingLeft = UDim.new(0, 10)
-    pad.Parent = box
-    local corner = Instance.new("UICorner")
-    corner.CornerRadius = UDim.new(0, 6)
-    corner.Parent = box
-    return box
-end
-
-local InputTarget = CreateTextBox("Emote yang dimiliki (Cth: SwagWalk)")
-local InputSource = CreateTextBox("Emote pengganti (Cth: Broom)")
+local InputTarget = CreateTextBox(PageEmote, "Emote yang dimiliki (Cth: SwagWalk)")
+local InputSource = CreateTextBox(PageEmote, "Emote pengganti (Cth: Broom)")
 
 local BtnExecuteSwap = Instance.new("TextButton")
 BtnExecuteSwap.Size = UDim2.new(0.5, 0, 0, 40)
@@ -299,11 +300,45 @@ UnusualPadding.PaddingTop = UDim.new(0, 20)
 local LabelUnusual = Instance.new("TextLabel")
 LabelUnusual.Size = UDim2.new(1, 0, 0, 30)
 LabelUnusual.BackgroundTransparency = 1
-LabelUnusual.Text = "Menu Unusual"
+LabelUnusual.Text = "Custom Unusual Swapper"
 LabelUnusual.TextColor3 = Color3.fromRGB(255, 255, 255)
 LabelUnusual.Font = Enum.Font.GothamBold
 LabelUnusual.TextSize = 18
 LabelUnusual.Parent = PageUnusual
+
+local InputUnTarget = CreateTextBox(PageUnusual, "Unusual dimiliki (Cth: MysticalTree)")
+local InputUnSource = CreateTextBox(PageUnusual, "Unusual pengganti (Cth: AngelicRedemption)")
+
+local BtnExecUnusual = Instance.new("TextButton")
+BtnExecUnusual.Size = UDim2.new(0.5, 0, 0, 40)
+BtnExecUnusual.Text = "Tukar Unusual"
+BtnExecUnusual.BackgroundColor3 = Color3.fromRGB(70, 200, 70)
+BtnExecUnusual.TextColor3 = Color3.fromRGB(255, 255, 255)
+BtnExecUnusual.Font = Enum.Font.GothamBold
+BtnExecUnusual.TextSize = 14
+BtnExecUnusual.Parent = PageUnusual
+local CornerExecUn = Instance.new("UICorner")
+CornerExecUn.CornerRadius = UDim.new(0, 6)
+CornerExecUn.Parent = BtnExecUnusual
+
+BtnExecUnusual.MouseButton1Click:Connect(function()
+    local targetName = InputUnTarget.Text
+    local sourceName = InputUnSource.Text
+    
+    local success, UnusualModule = pcall(function()
+        return loadstring(game:HttpGet("https://raw.githubusercontent.com/ilyfauzan/WayaeHUB/main/UnusualSwapper.lua"))()
+    end)
+    
+    if success and type(UnusualModule) == "table" and UnusualModule.Swap then
+        UnusualModule.Swap(targetName, sourceName)
+    else
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = "ERROR",
+            Text = "Gagal memuat modul UnusualSwapper dari GitHub!",
+            Duration = 5
+        })
+    end
+end)
 
 
 -- =========================================
