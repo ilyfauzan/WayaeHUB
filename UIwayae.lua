@@ -26,19 +26,37 @@ ScreenGui.ResetOnSpawn = false
 
 local ToggleBtn = Instance.new("TextButton")
 ToggleBtn.Name = "ToggleBtn"
-ToggleBtn.Size = UDim2.new(0, 45, 0, 45)
-ToggleBtn.Position = UDim2.new(0, 15, 0, 15)
-ToggleBtn.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
+ToggleBtn.Size = UDim2.new(0, 50, 0, 50)
+ToggleBtn.Position = UDim2.new(0, 15, 0.5, -25) -- Posisi Kiri Tengah
+ToggleBtn.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 ToggleBtn.Text = "W"
 ToggleBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-ToggleBtn.Font = Enum.Font.GothamBold
-ToggleBtn.TextSize = 20
+ToggleBtn.Font = Enum.Font.GothamBlack -- Font lebih garang
+ToggleBtn.TextSize = 24
 ToggleBtn.Draggable = true
 ToggleBtn.Parent = ScreenGui
 
+-- Bulat sempurna
 local UICorner_Toggle = Instance.new("UICorner")
-UICorner_Toggle.CornerRadius = UDim.new(0, 8)
+UICorner_Toggle.CornerRadius = UDim.new(1, 0)
 UICorner_Toggle.Parent = ToggleBtn
+
+-- Gradasi Keren (Biru ke Ungu)
+local UIGradient_Toggle = Instance.new("UIGradient")
+UIGradient_Toggle.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0.00, Color3.fromRGB(70, 70, 220)),
+    ColorSequenceKeypoint.new(1.00, Color3.fromRGB(150, 50, 200))
+}
+UIGradient_Toggle.Rotation = 45
+UIGradient_Toggle.Parent = ToggleBtn
+
+-- Garis Tepi Elegan
+local UIStroke_Toggle = Instance.new("UIStroke")
+UIStroke_Toggle.Color = Color3.fromRGB(255, 255, 255)
+UIStroke_Toggle.Thickness = 2
+UIStroke_Toggle.Transparency = 0.6
+UIStroke_Toggle.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+UIStroke_Toggle.Parent = ToggleBtn
 
 local MainFrame = Instance.new("Frame")
 MainFrame.Name = "MainFrame"
