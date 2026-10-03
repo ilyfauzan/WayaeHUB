@@ -285,7 +285,7 @@ local function CreateShaderButton(text, shaderId, color)
     end)
 end
 
-CreateShaderButton("✨ Shader 1 (Realism)", 1)
+CreateShaderButton("🌅 Shader 1 (Golden Glow)", 1)
 CreateShaderButton("🌆 Shader 2 (Vibrant)", 2)
 CreateShaderButton("🌑 Shader 3 (Dark Mode)", 3)
 CreateShaderButton("🔥 Shader 4 (Cinematic)", 4)
