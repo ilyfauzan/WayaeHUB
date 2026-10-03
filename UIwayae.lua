@@ -204,6 +204,36 @@ end
 -- 4. SETUP HALAMAN & TAB
 -- =========================================
 
+-- Tab 0: Home (Welcome Screen)
+local PageHome = CreatePage("HomePage")
+local BtnHome = CreateMenuButton("Home", "HomePage")
+
+local HomeLayout = Instance.new("UIListLayout")
+HomeLayout.Parent = PageHome
+HomeLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+HomeLayout.VerticalAlignment = Enum.VerticalAlignment.Center
+HomeLayout.SortOrder = Enum.SortOrder.LayoutOrder
+HomeLayout.Padding = UDim.new(0, 10)
+
+local WelcomeTitle = Instance.new("TextLabel")
+WelcomeTitle.Size = UDim2.new(1, 0, 0, 35)
+WelcomeTitle.BackgroundTransparency = 1
+WelcomeTitle.Text = "Welcome to WayaeHUB"
+WelcomeTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+WelcomeTitle.Font = Enum.Font.GothamBlack
+WelcomeTitle.TextSize = 24
+WelcomeTitle.Parent = PageHome
+
+local WelcomeSub = Instance.new("TextLabel")
+WelcomeSub.Size = UDim2.new(0.9, 0, 0, 40)
+WelcomeSub.BackgroundTransparency = 1
+WelcomeSub.Text = "Silakan pilih menu di samping untuk mulai memodifikasi Emote, Unusual, atau Shader Anda secara kustom."
+WelcomeSub.TextColor3 = Color3.fromRGB(180, 180, 190)
+WelcomeSub.Font = Enum.Font.Gotham
+WelcomeSub.TextSize = 13
+WelcomeSub.TextWrapped = true
+WelcomeSub.Parent = PageHome
+
 -- Tab 1: Shader
 local PageShader = CreatePage("ShaderPage")
 local BtnShader = CreateMenuButton("Shader", "ShaderPage")
@@ -406,8 +436,8 @@ end)
 -- =========================================
 -- 5. INISIALISASI
 -- =========================================
-Pages["ShaderPage"].Visible = true
-BtnShader.BackgroundColor3 = Color3.fromRGB(70, 70, 220)
-BtnShader.TextColor3 = Color3.fromRGB(255, 255, 255)
+Pages["HomePage"].Visible = true
+BtnHome.BackgroundColor3 = Color3.fromRGB(70, 70, 220)
+BtnHome.TextColor3 = Color3.fromRGB(255, 255, 255)
 
 print("Custom UI WayaeHUB berhasil dimuat!")
