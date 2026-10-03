@@ -34,7 +34,7 @@ ToggleBtn.Text = "W"
 ToggleBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 ToggleBtn.Font = Enum.Font.GothamBold
 ToggleBtn.TextSize = 20
-ToggleBtn.Draggable = true -- Bisa digeser juga di layar
+ToggleBtn.Draggable = true
 ToggleBtn.Parent = ScreenGui
 
 local UICorner_Toggle = Instance.new("UICorner")
@@ -43,8 +43,8 @@ UICorner_Toggle.Parent = ToggleBtn
 
 local MainFrame = Instance.new("Frame")
 MainFrame.Name = "MainFrame"
-MainFrame.Size = UDim2.new(0, 500, 0, 300)
-MainFrame.Position = UDim2.new(0.5, -250, 0.5, -150)
+MainFrame.Size = UDim2.new(0, 500, 0, 360) -- Diperbesar sedikit agar muat 4 textbox
+MainFrame.Position = UDim2.new(0.5, -250, 0.5, -180)
 MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
 MainFrame.BorderSizePixel = 0
 MainFrame.Active = true
@@ -93,6 +93,7 @@ CloseBtn.TextColor3 = Color3.fromRGB(200, 50, 50)
 CloseBtn.Font = Enum.Font.GothamBold
 CloseBtn.TextSize = 16
 CloseBtn.Parent = TopBar
+
 CloseBtn.MouseButton1Click:Connect(function()
     MainFrame.Visible = false
 end)
@@ -204,22 +205,20 @@ LabelShader.TextSize = 18
 LabelShader.Parent = PageShader
 
 -- ========================================================
--- Tab 2: Emote (Didesain ulang dengan Auto-Layout)
+-- Tab 2: Emote (Dengan 4 Input Manual)
 -- ========================================================
 local PageEmote = CreatePage("EmotePage")
 local BtnEmote = CreateMenuButton("Emote", "EmotePage")
 
--- Menggunakan UIListLayout agar susunan lurus & rapi ke bawah
 local EmoteLayout = Instance.new("UIListLayout")
 EmoteLayout.Parent = PageEmote
 EmoteLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 EmoteLayout.SortOrder = Enum.SortOrder.LayoutOrder
-EmoteLayout.Padding = UDim.new(0, 15) -- Jarak vertikal antar elemen
+EmoteLayout.Padding = UDim.new(0, 8) -- Jarak sedikit lebih rapat agar 4 box muat
 
--- Memberikan jarak dari atas
 local EmotePadding = Instance.new("UIPadding")
 EmotePadding.Parent = PageEmote
-EmotePadding.PaddingTop = UDim.new(0, 20)
+EmotePadding.PaddingTop = UDim.new(0, 15)
 
 local LabelEmote = Instance.new("TextLabel")
 LabelEmote.Size = UDim2.new(1, 0, 0, 30)
@@ -230,63 +229,57 @@ LabelEmote.Font = Enum.Font.GothamBold
 LabelEmote.TextSize = 18
 LabelEmote.Parent = PageEmote
 
--- Kotak Input 1
-local InputTarget = Instance.new("TextBox")
-InputTarget.Size = UDim2.new(0.9, 0, 0, 35) -- Dibuat lebih lebar (90% layar kanan)
-InputTarget.PlaceholderText = "Emote yang Anda miliki (Contoh: SwagWalk)"
-InputTarget.Text = ""
-InputTarget.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
-InputTarget.TextColor3 = Color3.fromRGB(255, 255, 255)
-InputTarget.Font = Enum.Font.Gotham
-InputTarget.TextSize = 13
-InputTarget.TextXAlignment = Enum.TextXAlignment.Left -- Teks merapat ke kiri
-InputTarget.Parent = PageEmote
+-- Fungsi pembantu untuk membuat TextBox
+local function CreateTextBox(placeholder)
+    local box = Instance.new("TextBox")
+    box.Size = UDim2.new(0.9, 0, 0, 32)
+    box.PlaceholderText = placeholder
+    box.Text = ""
+    box.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
+    box.TextColor3 = Color3.fromRGB(255, 255, 255)
+    box.Font = Enum.Font.Gotham
+    box.TextSize = 12
+    box.TextXAlignment = Enum.TextXAlignment.Left
+    box.Parent = PageEmote
+    local pad = Instance.new("UIPadding")
+    pad.PaddingLeft = UDim.new(0, 10)
+    pad.Parent = box
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0, 6)
+    corner.Parent = box
+    return box
+end
 
-local PadTarget = Instance.new("UIPadding")
-PadTarget.PaddingLeft = UDim.new(0, 10) -- Agar teks tidak menempel ke tembok kiri
-PadTarget.Parent = InputTarget
-
-local CornerTarget = Instance.new("UICorner"); CornerTarget.CornerRadius = UDim.new(0, 6); CornerTarget.Parent = InputTarget
-
--- Kotak Input 2
-local InputSource = Instance.new("TextBox")
-InputSource.Size = UDim2.new(0.9, 0, 0, 35)
-InputSource.PlaceholderText = "Emote pengganti (Contoh: RockinStride)"
-InputSource.Text = ""
-InputSource.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
-InputSource.TextColor3 = Color3.fromRGB(255, 255, 255)
-InputSource.Font = Enum.Font.Gotham
-InputSource.TextSize = 13
-InputSource.TextXAlignment = Enum.TextXAlignment.Left
-InputSource.Parent = PageEmote
-
-local PadSource = Instance.new("UIPadding")
-PadSource.PaddingLeft = UDim.new(0, 10)
-PadSource.Parent = InputSource
-
-local CornerSource = Instance.new("UICorner"); CornerSource.CornerRadius = UDim.new(0, 6); CornerSource.Parent = InputSource
+local InputTarget = CreateTextBox("1. Variabel Emote Target (Cth: Stride)")
+local InputUITarget = CreateTextBox("2. Nama Target di Layar (Cth: Stride)")
+local InputSource = CreateTextBox("3. Variabel Emote Baru (Cth: Broom)")
+local InputUISource = CreateTextBox("4. Nama Baru di Layar (Cth: Broom Of Doom)")
 
 -- Tombol Eksekusi
 local BtnExecuteSwap = Instance.new("TextButton")
-BtnExecuteSwap.Size = UDim2.new(0.5, 0, 0, 40)
+BtnExecuteSwap.Size = UDim2.new(0.5, 0, 0, 35)
 BtnExecuteSwap.Text = "Tukar Emote"
 BtnExecuteSwap.BackgroundColor3 = Color3.fromRGB(70, 200, 70)
 BtnExecuteSwap.TextColor3 = Color3.fromRGB(255, 255, 255)
 BtnExecuteSwap.Font = Enum.Font.GothamBold
 BtnExecuteSwap.TextSize = 14
 BtnExecuteSwap.Parent = PageEmote
-local CornerExecute = Instance.new("UICorner"); CornerExecute.CornerRadius = UDim.new(0, 6); CornerExecute.Parent = BtnExecuteSwap
+local CornerExecute = Instance.new("UICorner")
+CornerExecute.CornerRadius = UDim.new(0, 6)
+CornerExecute.Parent = BtnExecuteSwap
 
 BtnExecuteSwap.MouseButton1Click:Connect(function()
     local targetName = InputTarget.Text
+    local uiTarget = InputUITarget.Text
     local sourceName = InputSource.Text
+    local uiSource = InputUISource.Text
     
     local success, EmoteModule = pcall(function()
         return loadstring(game:HttpGet("https://raw.githubusercontent.com/ilyfauzan/WayaeHUB/main/EmoteSwapper.lua"))()
     end)
     
     if success and type(EmoteModule) == "table" and EmoteModule.Swap then
-        EmoteModule.Swap(targetName, sourceName)
+        EmoteModule.Swap(targetName, uiTarget, sourceName, uiSource)
     else
         game:GetService("StarterGui"):SetCore("SendNotification", {
             Title = "ERROR",
