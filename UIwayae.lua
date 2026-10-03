@@ -11,7 +11,7 @@ else
     if not success then parentUI = Players.LocalPlayer:WaitForChild("PlayerGui") end
 end
 
--- Hapus UI lama jika ada biar tidak bertumpuk
+-- Hapus UI lama jika ada
 if parentUI:FindFirstChild("WayaeHUB_UI") then
     parentUI.WayaeHUB_UI:Destroy()
 end
@@ -24,7 +24,6 @@ ScreenGui.Name = "WayaeHUB_UI"
 ScreenGui.Parent = parentUI
 ScreenGui.ResetOnSpawn = false
 
--- Tombol Toggle (Untuk Munculkan/Sembunyikan UI)
 local ToggleBtn = Instance.new("TextButton")
 ToggleBtn.Name = "ToggleBtn"
 ToggleBtn.Size = UDim2.new(0, 45, 0, 45)
@@ -43,8 +42,8 @@ UICorner_Toggle.Parent = ToggleBtn
 
 local MainFrame = Instance.new("Frame")
 MainFrame.Name = "MainFrame"
-MainFrame.Size = UDim2.new(0, 500, 0, 360) -- Diperbesar sedikit agar muat 4 textbox
-MainFrame.Position = UDim2.new(0.5, -250, 0.5, -180)
+MainFrame.Size = UDim2.new(0, 500, 0, 300) -- Ukuran dikembalikan karena input hanya 2
+MainFrame.Position = UDim2.new(0.5, -250, 0.5, -150)
 MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
 MainFrame.BorderSizePixel = 0
 MainFrame.Active = true
@@ -143,7 +142,6 @@ local function CreatePage(pageName)
     PageFrame.BackgroundTransparency = 1
     PageFrame.Visible = false
     PageFrame.Parent = ContentArea
-    
     Pages[pageName] = PageFrame
     return PageFrame
 end
@@ -184,17 +182,14 @@ end
 -- Tab 1: Shader
 local PageShader = CreatePage("ShaderPage")
 local BtnShader = CreateMenuButton("Shader", "ShaderPage")
-
 local ShaderLayout = Instance.new("UIListLayout")
 ShaderLayout.Parent = PageShader
 ShaderLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 ShaderLayout.SortOrder = Enum.SortOrder.LayoutOrder
 ShaderLayout.Padding = UDim.new(0, 15)
-
 local ShaderPadding = Instance.new("UIPadding")
 ShaderPadding.Parent = PageShader
 ShaderPadding.PaddingTop = UDim.new(0, 20)
-
 local LabelShader = Instance.new("TextLabel")
 LabelShader.Size = UDim2.new(1, 0, 0, 30)
 LabelShader.BackgroundTransparency = 1
@@ -204,8 +199,9 @@ LabelShader.Font = Enum.Font.GothamBold
 LabelShader.TextSize = 18
 LabelShader.Parent = PageShader
 
+
 -- ========================================================
--- Tab 2: Emote (Dengan 4 Input Manual)
+-- Tab 2: Emote (Kembali ke 2 Input)
 -- ========================================================
 local PageEmote = CreatePage("EmotePage")
 local BtnEmote = CreateMenuButton("Emote", "EmotePage")
@@ -214,11 +210,11 @@ local EmoteLayout = Instance.new("UIListLayout")
 EmoteLayout.Parent = PageEmote
 EmoteLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 EmoteLayout.SortOrder = Enum.SortOrder.LayoutOrder
-EmoteLayout.Padding = UDim.new(0, 8) -- Jarak sedikit lebih rapat agar 4 box muat
+EmoteLayout.Padding = UDim.new(0, 15)
 
 local EmotePadding = Instance.new("UIPadding")
 EmotePadding.Parent = PageEmote
-EmotePadding.PaddingTop = UDim.new(0, 15)
+EmotePadding.PaddingTop = UDim.new(0, 20)
 
 local LabelEmote = Instance.new("TextLabel")
 LabelEmote.Size = UDim2.new(1, 0, 0, 30)
@@ -229,16 +225,15 @@ LabelEmote.Font = Enum.Font.GothamBold
 LabelEmote.TextSize = 18
 LabelEmote.Parent = PageEmote
 
--- Fungsi pembantu untuk membuat TextBox
 local function CreateTextBox(placeholder)
     local box = Instance.new("TextBox")
-    box.Size = UDim2.new(0.9, 0, 0, 32)
+    box.Size = UDim2.new(0.9, 0, 0, 35)
     box.PlaceholderText = placeholder
     box.Text = ""
     box.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
     box.TextColor3 = Color3.fromRGB(255, 255, 255)
     box.Font = Enum.Font.Gotham
-    box.TextSize = 12
+    box.TextSize = 13
     box.TextXAlignment = Enum.TextXAlignment.Left
     box.Parent = PageEmote
     local pad = Instance.new("UIPadding")
@@ -250,14 +245,11 @@ local function CreateTextBox(placeholder)
     return box
 end
 
-local InputTarget = CreateTextBox("1. Variabel Emote Target (Cth: Stride)")
-local InputUITarget = CreateTextBox("2. Nama Target di Layar (Cth: Stride)")
-local InputSource = CreateTextBox("3. Variabel Emote Baru (Cth: Broom)")
-local InputUISource = CreateTextBox("4. Nama Baru di Layar (Cth: Broom Of Doom)")
+local InputTarget = CreateTextBox("Emote yang dimiliki (Cth: SwagWalk)")
+local InputSource = CreateTextBox("Emote pengganti (Cth: Broom)")
 
--- Tombol Eksekusi
 local BtnExecuteSwap = Instance.new("TextButton")
-BtnExecuteSwap.Size = UDim2.new(0.5, 0, 0, 35)
+BtnExecuteSwap.Size = UDim2.new(0.5, 0, 0, 40)
 BtnExecuteSwap.Text = "Tukar Emote"
 BtnExecuteSwap.BackgroundColor3 = Color3.fromRGB(70, 200, 70)
 BtnExecuteSwap.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -270,16 +262,14 @@ CornerExecute.Parent = BtnExecuteSwap
 
 BtnExecuteSwap.MouseButton1Click:Connect(function()
     local targetName = InputTarget.Text
-    local uiTarget = InputUITarget.Text
     local sourceName = InputSource.Text
-    local uiSource = InputUISource.Text
     
     local success, EmoteModule = pcall(function()
         return loadstring(game:HttpGet("https://raw.githubusercontent.com/ilyfauzan/WayaeHUB/main/EmoteSwapper.lua"))()
     end)
     
     if success and type(EmoteModule) == "table" and EmoteModule.Swap then
-        EmoteModule.Swap(targetName, uiTarget, sourceName, uiSource)
+        EmoteModule.Swap(targetName, sourceName)
     else
         game:GetService("StarterGui"):SetCore("SendNotification", {
             Title = "ERROR",

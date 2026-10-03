@@ -3,7 +3,25 @@ local rs = game:GetService("ReplicatedStorage")
 local starterGui = game:GetService("StarterGui")
 local Players = game:GetService("Players")
 
--- Inisialisasi loop pengganti nama UI secara permanen (hanya berjalan 1 kali di background)
+-- ==========================================
+-- KAMUS PINTAR (DICTIONARY)
+-- Masukkan nama variabel yang ejaan di layarnya tidak standar
+-- ==========================================
+local CustomNames = {
+    ["Broom"] = "Broom of Doom",
+    ["BroomOfDoom"] = "Broom of Doom",
+    ["RockinStride"] = "Rockin' Stride",
+    ["Cyberbroom"] = "Cyberbroom",
+    ["CyberBroom"] = "Cyberbroom",
+    ["GhastlyGrimoire"] = "Ghastly Grimoire",
+    ["GhastlyGrimiore"] = "Ghastly Grimoire",
+    ["WerewolfHowl"] = "Werewolf Howl",
+    ["WarewolfHowl"] = "Werewolf Howl",
+    ["MysticalTree"] = "Mystical Tree",
+    ["AngelicRedemption"] = "Angelic Redemption"
+}
+
+-- Inisialisasi loop pengganti nama UI secara permanen (background)
 if not _G.ActiveWayaeSwaps then
     _G.ActiveWayaeSwaps = {}
     task.spawn(function()
@@ -15,7 +33,6 @@ if not _G.ActiveWayaeSwaps then
                 if obj:IsA("TextLabel") and obj.Text ~= "" then
                     for uiTgt, uiSrc in pairs(_G.ActiveWayaeSwaps) do
                         -- Menggunakan perbandingan EXACT (==) agar tidak terjadi bug tumpang tindih
-                        -- Contoh: "Rockin Stride" tidak akan tertiban oleh "Stride"
                         if obj.Text == uiTgt then
                             obj.Text = uiSrc
                         end
@@ -26,15 +43,24 @@ if not _G.ActiveWayaeSwaps then
     end)
 end
 
-function EmoteSwapper.Swap(targetName, uiTarget, sourceName, uiSource)
+-- Fungsi untuk mendapatkan nama layar yang akurat
+local function getRealDisplayName(rawName)
+    -- 1. Cek di kamus pintar dulu
+    if CustomNames[rawName] then
+        return CustomNames[rawName]
+    end
+    -- 2. Jika tidak ada di kamus, pisahkan dengan spasi otomatis (Misal: SwagWalk -> Swag Walk)
+    return string.gsub(rawName, "(%l)(%u)", "%1 %2")
+end
+
+function EmoteSwapper.Swap(targetName, sourceName)
     if targetName == "" or sourceName == "" then
         starterGui:SetCore("SendNotification", {Title = "ERROR", Text = "Harap isi Variabel Target & Source!", Duration = 3})
         return
     end
 
-    -- Jika input UI Display Name dikosongkan, gunakan nama variabelnya
-    if uiTarget == "" then uiTarget = targetName end
-    if uiSource == "" then uiSource = sourceName end
+    local uiTarget = getRealDisplayName(targetName)
+    local uiSource = getRealDisplayName(sourceName)
 
     local targetObj = nil
     local sourceObj = nil
@@ -74,7 +100,7 @@ function EmoteSwapper.Swap(targetName, uiTarget, sourceName, uiSource)
             end
         end
 
-        -- Daftarkan nama asli tersebut ke dalam loop background agar di-rename secara permanen
+        -- Daftarkan nama asli tersebut ke dalam loop background
         _G.ActiveWayaeSwaps[uiTarget] = uiSource
 
         starterGui:SetCore("SendNotification", {
