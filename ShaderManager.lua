@@ -49,17 +49,44 @@ function ShaderManager.Apply(shaderId)
         })
         
     elseif shaderId == 2 then
-        -- Placeholder Shader 2 (Vibrant / Terang)
-        CreateEffect("ColorCorrectionEffect", { Brightness = 0.1, Contrast = 0.1, Saturation = 1.2 })
+        -- Midnight Velvet (Suasana Malam Biru Elegan & Dingin)
+        CreateEffect("ColorCorrectionEffect", { 
+            Brightness = -0.15, 
+            Contrast = 0.35, 
+            Saturation = 0.1,
+            TintColor = Color3.fromRGB(160, 180, 255)
+        })
+        CreateEffect("BloomEffect", { 
+            Intensity = 0.7, 
+            Size = 24, 
+            Threshold = 1.0 
+        })
         
     elseif shaderId == 3 then
-        -- Placeholder Shader 3 (Dark Mode / Horor)
-        CreateEffect("ColorCorrectionEffect", { Brightness = -0.2, Contrast = 0.5, Saturation = -0.6 })
+        -- Autumn Melancholy (Sinematik Pudar / Drama Movie)
+        CreateEffect("ColorCorrectionEffect", { 
+            Brightness = -0.05, 
+            Contrast = 0.45, 
+            Saturation = -0.5,
+            TintColor = Color3.fromRGB(240, 220, 200)
+        })
+        CreateEffect("BlurEffect", { 
+            Size = 2.5
+        })
         
     elseif shaderId == 4 then
-        -- Placeholder Shader 4 (Cinematic Blur)
-        CreateEffect("ColorCorrectionEffect", { Brightness = -0.05, Contrast = 0.4, Saturation = 0.2 })
-        CreateEffect("BlurEffect", { Size = 2 })
+        -- Cyber Neon (Super Vibrant, Glow Kuat, Estetika Neon/Magenta)
+        CreateEffect("ColorCorrectionEffect", { 
+            Brightness = 0.05, 
+            Contrast = 0.25, 
+            Saturation = 1.3,
+            TintColor = Color3.fromRGB(255, 240, 255)
+        })
+        CreateEffect("BloomEffect", { 
+            Intensity = 1.2, 
+            Size = 45,
+            Threshold = 1.5 
+        })
     end
     
     game:GetService("StarterGui"):SetCore("SendNotification", {

@@ -286,9 +286,9 @@ local function CreateShaderButton(text, shaderId, color)
 end
 
 CreateShaderButton("🌅 Shader 1 (Golden Glow)", 1)
-CreateShaderButton("🌆 Shader 2 (Vibrant)", 2)
-CreateShaderButton("🌑 Shader 3 (Dark Mode)", 3)
-CreateShaderButton("🔥 Shader 4 (Cinematic)", 4)
+CreateShaderButton("🌙 Shader 2 (Midnight Velvet)", 2)
+CreateShaderButton("🍂 Shader 3 (Melancholy)", 3)
+CreateShaderButton("🔮 Shader 4 (Cyber Neon)", 4)
 CreateShaderButton("❌ Matikan Shader", 0, Color3.fromRGB(200, 50, 50))
 
 
