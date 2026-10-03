@@ -159,12 +159,22 @@ end
 -- 4. SETUP HALAMAN & TAB
 -- =========================================
 
--- Tab 1: Shader (Kosong untuk sementara)
+-- Tab 1: Shader
 local PageShader = CreatePage("ShaderPage")
 local BtnShader = CreateMenuButton("Shader", "ShaderPage")
+
+local ShaderLayout = Instance.new("UIListLayout")
+ShaderLayout.Parent = PageShader
+ShaderLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+ShaderLayout.SortOrder = Enum.SortOrder.LayoutOrder
+ShaderLayout.Padding = UDim.new(0, 15)
+
+local ShaderPadding = Instance.new("UIPadding")
+ShaderPadding.Parent = PageShader
+ShaderPadding.PaddingTop = UDim.new(0, 20)
+
 local LabelShader = Instance.new("TextLabel")
 LabelShader.Size = UDim2.new(1, 0, 0, 30)
-LabelShader.Position = UDim2.new(0, 0, 0, 15)
 LabelShader.BackgroundTransparency = 1
 LabelShader.Text = "Menu Shader"
 LabelShader.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -173,14 +183,25 @@ LabelShader.TextSize = 18
 LabelShader.Parent = PageShader
 
 -- ========================================================
--- Tab 2: Emote (Dengan Modul Terpisah)
+-- Tab 2: Emote (Didesain ulang dengan Auto-Layout)
 -- ========================================================
 local PageEmote = CreatePage("EmotePage")
 local BtnEmote = CreateMenuButton("Emote", "EmotePage")
 
+-- Menggunakan UIListLayout agar susunan lurus & rapi ke bawah
+local EmoteLayout = Instance.new("UIListLayout")
+EmoteLayout.Parent = PageEmote
+EmoteLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+EmoteLayout.SortOrder = Enum.SortOrder.LayoutOrder
+EmoteLayout.Padding = UDim.new(0, 15) -- Jarak vertikal antar elemen
+
+-- Memberikan jarak dari atas
+local EmotePadding = Instance.new("UIPadding")
+EmotePadding.Parent = PageEmote
+EmotePadding.PaddingTop = UDim.new(0, 20)
+
 local LabelEmote = Instance.new("TextLabel")
 LabelEmote.Size = UDim2.new(1, 0, 0, 30)
-LabelEmote.Position = UDim2.new(0, 0, 0, 10)
 LabelEmote.BackgroundTransparency = 1
 LabelEmote.Text = "Custom Emote Swapper"
 LabelEmote.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -188,36 +209,45 @@ LabelEmote.Font = Enum.Font.GothamBold
 LabelEmote.TextSize = 18
 LabelEmote.Parent = PageEmote
 
--- Kotak Input 1: Emote yang mau diganti (Target)
+-- Kotak Input 1
 local InputTarget = Instance.new("TextBox")
-InputTarget.Size = UDim2.new(0.8, 0, 0, 35)
-InputTarget.Position = UDim2.new(0.1, 0, 0, 50)
+InputTarget.Size = UDim2.new(0.9, 0, 0, 35) -- Dibuat lebih lebar (90% layar kanan)
 InputTarget.PlaceholderText = "Emote yang Anda miliki (Contoh: SwagWalk)"
 InputTarget.Text = ""
 InputTarget.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
 InputTarget.TextColor3 = Color3.fromRGB(255, 255, 255)
 InputTarget.Font = Enum.Font.Gotham
 InputTarget.TextSize = 13
+InputTarget.TextXAlignment = Enum.TextXAlignment.Left -- Teks merapat ke kiri
 InputTarget.Parent = PageEmote
+
+local PadTarget = Instance.new("UIPadding")
+PadTarget.PaddingLeft = UDim.new(0, 10) -- Agar teks tidak menempel ke tembok kiri
+PadTarget.Parent = InputTarget
+
 local CornerTarget = Instance.new("UICorner"); CornerTarget.CornerRadius = UDim.new(0, 6); CornerTarget.Parent = InputTarget
 
--- Kotak Input 2: Emote pengganti (Source)
+-- Kotak Input 2
 local InputSource = Instance.new("TextBox")
-InputSource.Size = UDim2.new(0.8, 0, 0, 35)
-InputSource.Position = UDim2.new(0.1, 0, 0, 95)
+InputSource.Size = UDim2.new(0.9, 0, 0, 35)
 InputSource.PlaceholderText = "Emote pengganti (Contoh: RockinStride)"
 InputSource.Text = ""
 InputSource.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
 InputSource.TextColor3 = Color3.fromRGB(255, 255, 255)
 InputSource.Font = Enum.Font.Gotham
 InputSource.TextSize = 13
+InputSource.TextXAlignment = Enum.TextXAlignment.Left
 InputSource.Parent = PageEmote
+
+local PadSource = Instance.new("UIPadding")
+PadSource.PaddingLeft = UDim.new(0, 10)
+PadSource.Parent = InputSource
+
 local CornerSource = Instance.new("UICorner"); CornerSource.CornerRadius = UDim.new(0, 6); CornerSource.Parent = InputSource
 
 -- Tombol Eksekusi
 local BtnExecuteSwap = Instance.new("TextButton")
 BtnExecuteSwap.Size = UDim2.new(0.5, 0, 0, 40)
-BtnExecuteSwap.Position = UDim2.new(0.25, 0, 0, 150)
 BtnExecuteSwap.Text = "Tukar Emote"
 BtnExecuteSwap.BackgroundColor3 = Color3.fromRGB(70, 200, 70)
 BtnExecuteSwap.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -226,12 +256,10 @@ BtnExecuteSwap.TextSize = 14
 BtnExecuteSwap.Parent = PageEmote
 local CornerExecute = Instance.new("UICorner"); CornerExecute.CornerRadius = UDim.new(0, 6); CornerExecute.Parent = BtnExecuteSwap
 
--- Logika mengambil file EmoteSwapper.lua dari GitHub saat tombol ditekan
 BtnExecuteSwap.MouseButton1Click:Connect(function()
     local targetName = InputTarget.Text
     local sourceName = InputSource.Text
     
-    -- Ambil modul logika secara dinamis (Terpisah agar rapi)
     local success, EmoteModule = pcall(function()
         return loadstring(game:HttpGet("https://raw.githubusercontent.com/ilyfauzan/WayaeHUB/main/EmoteSwapper.lua"))()
     end)
@@ -253,9 +281,19 @@ end)
 -- ========================================================
 local PageUnusual = CreatePage("UnusualPage")
 local BtnUnusual = CreateMenuButton("Unusual", "UnusualPage")
+
+local UnusualLayout = Instance.new("UIListLayout")
+UnusualLayout.Parent = PageUnusual
+UnusualLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+UnusualLayout.SortOrder = Enum.SortOrder.LayoutOrder
+UnusualLayout.Padding = UDim.new(0, 15)
+
+local UnusualPadding = Instance.new("UIPadding")
+UnusualPadding.Parent = PageUnusual
+UnusualPadding.PaddingTop = UDim.new(0, 20)
+
 local LabelUnusual = Instance.new("TextLabel")
 LabelUnusual.Size = UDim2.new(1, 0, 0, 30)
-LabelUnusual.Position = UDim2.new(0, 0, 0, 15)
 LabelUnusual.BackgroundTransparency = 1
 LabelUnusual.Text = "Menu Unusual"
 LabelUnusual.TextColor3 = Color3.fromRGB(255, 255, 255)
