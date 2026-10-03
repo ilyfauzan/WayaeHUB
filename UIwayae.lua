@@ -304,6 +304,7 @@ CreateShaderButton("🎭 Shader 7 (Black & White)", 7)
 CreateShaderButton("🔥 Shader 8 (Hellfire)", 8)
 CreateShaderButton("☀️ Shader 9 (Desert Mirage)", 9)
 CreateShaderButton("🌌 Shader 10 (Void Galaxy)", 10)
+CreateShaderButton("🍗 Shader 11 (Meme Pecel Ayam)", 11)
 CreateShaderButton("❌ Matikan Shader", 0, Color3.fromRGB(200, 50, 50))
 
 
