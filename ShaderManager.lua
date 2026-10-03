@@ -15,12 +15,6 @@ local function ClearShaders()
             end
         end
     end
-    -- Bersihkan juga objek 3D meme di workspace
-    for _, obj in ipairs(workspace:GetChildren()) do
-        if obj:GetAttribute("WayaeShader") then
-            obj:Destroy()
-        end
-    end
 end
 
 local function CreateEffect(className, properties, parent)
@@ -115,41 +109,6 @@ function ShaderManager.Apply(shaderId)
         CreateEffect("Sky", { StarCount = 10000, SunAngularSize = 0, MoonAngularSize = 20, CelestialBodiesShown = true })
         CreateEffect("BloomEffect", { Intensity = 0.5, Size = 30, Threshold = 0.8 })
         if Terrain then CreateEffect("Clouds", { Color = Color3.fromRGB(0, 0, 0), Cover = 0, Density = 0 }, Terrain) end
-        
-    elseif shaderId == 11 then
-        -- Meme Pecel Ayam (Efek Deep Fried + Spawner Spanduk Pecel Ayam)
-        -- 1. Efek "Deep Fried" Meme: Kontras tinggi, kuning over-saturated
-        CreateEffect("ColorCorrectionEffect", { Contrast = 1.5, Saturation = 2.0, TintColor = Color3.fromRGB(255, 180, 50) })
-        CreateEffect("BloomEffect", { Intensity = 1.5, Size = 50, Threshold = 0.5 })
-        
-        -- 2. Memunculkan papan raksasa Pecel Ayam di depan player
-        local player = game:GetService("Players").LocalPlayer
-        if player and player.Character then
-            local hrp = player.Character:FindFirstChild("HumanoidRootPart")
-            if hrp then
-                local banner = Instance.new("Part")
-                banner.Size = Vector3.new(30, 15, 1) -- Ukuran spanduk raksasa
-                -- Posisikan di depan atas player
-                banner.CFrame = CFrame.new(hrp.Position + hrp.CFrame.LookVector * 40 + Vector3.new(0, 25, 0), hrp.Position)
-                banner.Anchored = true
-                banner.CanCollide = false
-                banner:SetAttribute("WayaeShader", true)
-                banner.Parent = workspace
-                
-                -- GANTI ID INI DENGAN ID GAMBAR PECEL AYAM DARI ROBLOX LIBRARY
-                local pecelAyamAssetId = "rbxassetid://13113422872" 
-                
-                local decalFront = Instance.new("Decal")
-                decalFront.Texture = pecelAyamAssetId
-                decalFront.Face = Enum.NormalId.Front
-                decalFront.Parent = banner
-                
-                local decalBack = Instance.new("Decal")
-                decalBack.Texture = pecelAyamAssetId
-                decalBack.Face = Enum.NormalId.Back
-                decalBack.Parent = banner
-            end
-        end
     end
     
     game:GetService("StarterGui"):SetCore("SendNotification", {
