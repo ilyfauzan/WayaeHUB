@@ -109,6 +109,53 @@ function ShaderManager.Apply(shaderId)
         CreateEffect("Sky", { StarCount = 10000, SunAngularSize = 0, MoonAngularSize = 20, CelestialBodiesShown = true })
         CreateEffect("BloomEffect", { Intensity = 0.5, Size = 30, Threshold = 0.8 })
         if Terrain then CreateEffect("Clouds", { Color = Color3.fromRGB(0, 0, 0), Cover = 0, Density = 0 }, Terrain) end
+
+    elseif shaderId == 11 then
+        -- Ultra Clear Day 8K (Sangat Jernih, Tajam, Realistis)
+        CreateEffect("ColorCorrectionEffect", { Contrast = 0.15, Saturation = 0.2, Brightness = 0.05, TintColor = Color3.fromRGB(255, 255, 255) })
+        CreateEffect("Atmosphere", { Density = 0.2, Offset = 0.25, Color = Color3.fromRGB(130, 200, 255), Decay = Color3.fromRGB(100, 150, 255), Glare = 0.5, Haze = 1 })
+        CreateEffect("Sky", { SunAngularSize = 10 })
+        CreateEffect("SunRaysEffect", { Intensity = 0.15, Spread = 0.4 })
+        CreateEffect("BloomEffect", { Intensity = 0.1, Size = 15, Threshold = 1.0 })
+        CreateEffect("DepthOfFieldEffect", { FarIntensity = 0.1, FocusDistance = 150, InFocusRadius = 50 })
+        if Terrain then CreateEffect("Clouds", { Color = Color3.fromRGB(255, 255, 255), Cover = 0.4, Density = 0.3 }, Terrain) end
+
+    elseif shaderId == 12 then
+        -- Cinematic RTX (Teal & Orange, Efek Film HD)
+        CreateEffect("ColorCorrectionEffect", { Contrast = 0.25, Saturation = 0.1, TintColor = Color3.fromRGB(230, 240, 255) })
+        CreateEffect("Atmosphere", { Density = 0.3, Offset = 0.25, Color = Color3.fromRGB(20, 60, 100), Decay = Color3.fromRGB(200, 100, 50), Glare = 0.8, Haze = 2 })
+        CreateEffect("SunRaysEffect", { Intensity = 0.4, Spread = 0.8 })
+        CreateEffect("BloomEffect", { Intensity = 0.3, Size = 24, Threshold = 0.8 })
+        CreateEffect("DepthOfFieldEffect", { FarIntensity = 0.25, FocusDistance = 100, InFocusRadius = 30 })
+        if Terrain then CreateEffect("Clouds", { Color = Color3.fromRGB(240, 245, 255), Cover = 0.5, Density = 0.5 }, Terrain) end
+
+    elseif shaderId == 13 then
+        -- Moody Overcast 8K (Mendung, Gelap, Realistis Hujan)
+        CreateEffect("ColorCorrectionEffect", { Contrast = 0.2, Saturation = -0.3, Brightness = -0.05, TintColor = Color3.fromRGB(255, 255, 255) })
+        CreateEffect("Atmosphere", { Density = 0.45, Offset = 0.2, Color = Color3.fromRGB(100, 110, 120), Decay = Color3.fromRGB(80, 90, 100), Glare = 0, Haze = 5 })
+        CreateEffect("Sky", { SunAngularSize = 0 })
+        CreateEffect("BloomEffect", { Intensity = 0.2, Size = 20, Threshold = 1.5 })
+        CreateEffect("DepthOfFieldEffect", { FarIntensity = 0.15, FocusDistance = 100, InFocusRadius = 50 })
+        if Terrain then CreateEffect("Clouds", { Color = Color3.fromRGB(120, 120, 130), Cover = 0.9, Density = 0.8 }, Terrain) end
+
+    elseif shaderId == 14 then
+        -- Golden Hour Ultra (Sunset HD 8K)
+        CreateEffect("ColorCorrectionEffect", { Contrast = 0.2, Saturation = 0.3, TintColor = Color3.fromRGB(255, 235, 215) })
+        CreateEffect("Atmosphere", { Density = 0.35, Offset = 0.25, Color = Color3.fromRGB(255, 120, 50), Decay = Color3.fromRGB(150, 50, 20), Glare = 1.5, Haze = 4 })
+        CreateEffect("Sky", { SunAngularSize = 18 })
+        CreateEffect("SunRaysEffect", { Intensity = 0.7, Spread = 1.0 })
+        CreateEffect("BloomEffect", { Intensity = 0.4, Size = 24, Threshold = 1.2 })
+        CreateEffect("DepthOfFieldEffect", { FarIntensity = 0.2, FocusDistance = 120, InFocusRadius = 50 })
+        if Terrain then CreateEffect("Clouds", { Color = Color3.fromRGB(255, 150, 100), Cover = 0.6, Density = 0.4 }, Terrain) end
+
+    elseif shaderId == 15 then
+        -- Midnight 8K (Malam HD Tajam, Lampu Neon Menyala)
+        CreateEffect("ColorCorrectionEffect", { Contrast = 0.3, Saturation = 0.1, TintColor = Color3.fromRGB(240, 240, 255) })
+        CreateEffect("Atmosphere", { Density = 0.25, Offset = 0.3, Color = Color3.fromRGB(5, 10, 20), Decay = Color3.fromRGB(2, 5, 10), Glare = 0, Haze = 1 })
+        CreateEffect("Sky", { StarCount = 8000, MoonAngularSize = 15 })
+        CreateEffect("BloomEffect", { Intensity = 0.6, Size = 20, Threshold = 0.5 }) -- Membuat lampu map bersinar terang
+        CreateEffect("DepthOfFieldEffect", { FarIntensity = 0.1, FocusDistance = 100, InFocusRadius = 50 })
+        if Terrain then CreateEffect("Clouds", { Color = Color3.fromRGB(40, 50, 70), Cover = 0.3, Density = 0.2 }, Terrain) end
     end
     
     game:GetService("StarterGui"):SetCore("SendNotification", {
