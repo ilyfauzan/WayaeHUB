@@ -427,6 +427,80 @@ BtnExecUnusual.MouseButton1Click:Connect(function()
 end)
 
 
+local PageAvatar = CreatePage("AvatarPage")
+local BtnAvatar = CreateMenuButton("Avatar", "AvatarPage")
+
+local AvatarLayout = Instance.new("UIListLayout")
+AvatarLayout.Parent = PageAvatar
+AvatarLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+AvatarLayout.SortOrder = Enum.SortOrder.LayoutOrder
+AvatarLayout.Padding = UDim.new(0, 15)
+
+local AvatarPadding = Instance.new("UIPadding")
+AvatarPadding.Parent = PageAvatar
+AvatarPadding.PaddingTop = UDim.new(0, 20)
+
+local LabelAvatar = Instance.new("TextLabel")
+LabelAvatar.Size = UDim2.new(1, 0, 0, 30)
+LabelAvatar.BackgroundTransparency = 1
+LabelAvatar.Text = "Avatar Mods (R15)"
+LabelAvatar.TextColor3 = Color3.fromRGB(255, 255, 255)
+LabelAvatar.Font = Enum.Font.GothamBold
+LabelAvatar.TextSize = 18
+LabelAvatar.Parent = PageAvatar
+
+local BtnHeadless = Instance.new("TextButton")
+BtnHeadless.Size = UDim2.new(0.5, 0, 0, 40)
+BtnHeadless.Text = "Equip Headless"
+BtnHeadless.BackgroundColor3 = Color3.fromRGB(70, 70, 200)
+BtnHeadless.TextColor3 = Color3.fromRGB(255, 255, 255)
+BtnHeadless.Font = Enum.Font.GothamBold
+BtnHeadless.TextSize = 14
+BtnHeadless.Parent = PageAvatar
+local CornerHeadless = Instance.new("UICorner")
+CornerHeadless.CornerRadius = UDim.new(0, 6)
+CornerHeadless.Parent = BtnHeadless
+
+BtnHeadless.MouseButton1Click:Connect(function()
+    local success, AvatarModule = pcall(function()
+        return loadstring(game:HttpGet("https://raw.githubusercontent.com/ilyfauzan/WayaeHUB/main/AvatarMod.lua"))()
+    end)
+    
+    if success and type(AvatarModule) == "table" and AvatarModule.Headless then
+        AvatarModule.Headless()
+    else
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = "ERROR", Text = "Gagal memuat modul AvatarMod!", Duration = 5
+        })
+    end
+end)
+
+local BtnKorblox = Instance.new("TextButton")
+BtnKorblox.Size = UDim2.new(0.5, 0, 0, 40)
+BtnKorblox.Text = "Equip Korblox"
+BtnKorblox.BackgroundColor3 = Color3.fromRGB(200, 70, 70)
+BtnKorblox.TextColor3 = Color3.fromRGB(255, 255, 255)
+BtnKorblox.Font = Enum.Font.GothamBold
+BtnKorblox.TextSize = 14
+BtnKorblox.Parent = PageAvatar
+local CornerKorblox = Instance.new("UICorner")
+CornerKorblox.CornerRadius = UDim.new(0, 6)
+CornerKorblox.Parent = BtnKorblox
+
+BtnKorblox.MouseButton1Click:Connect(function()
+    local success, AvatarModule = pcall(function()
+        return loadstring(game:HttpGet("https://raw.githubusercontent.com/ilyfauzan/WayaeHUB/main/AvatarMod.lua"))()
+    end)
+    
+    if success and type(AvatarModule) == "table" and AvatarModule.Korblox then
+        AvatarModule.Korblox()
+    else
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = "ERROR", Text = "Gagal memuat modul AvatarMod!", Duration = 5
+        })
+    end
+end)
+
 Pages["HomePage"].Visible = true
 BtnHome.BackgroundColor3 = Color3.fromRGB(70, 70, 220)
 BtnHome.TextColor3 = Color3.fromRGB(255, 255, 255)
