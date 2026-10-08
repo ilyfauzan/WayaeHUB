@@ -501,6 +501,52 @@ BtnKorblox.MouseButton1Click:Connect(function()
     end
 end)
 
+local BtnHeadlessAll = Instance.new("TextButton")
+BtnHeadlessAll.Size = UDim2.new(0.5, 0, 0, 40)
+BtnHeadlessAll.Text = "Headless (Semua Orang)"
+BtnHeadlessAll.BackgroundColor3 = Color3.fromRGB(50, 50, 150)
+BtnHeadlessAll.TextColor3 = Color3.fromRGB(255, 255, 255)
+BtnHeadlessAll.Font = Enum.Font.GothamBold
+BtnHeadlessAll.TextSize = 13
+BtnHeadlessAll.Parent = PageAvatar
+local CornerHeadlessAll = Instance.new("UICorner")
+CornerHeadlessAll.CornerRadius = UDim.new(0, 6)
+CornerHeadlessAll.Parent = BtnHeadlessAll
+
+BtnHeadlessAll.MouseButton1Click:Connect(function()
+    local success, AvatarModule = pcall(function()
+        return loadstring(game:HttpGet("https://raw.githubusercontent.com/ilyfauzan/WayaeHUB/main/AvatarMod.lua"))()
+    end)
+    if success and type(AvatarModule) == "table" and AvatarModule.HeadlessAll then
+        AvatarModule.HeadlessAll()
+    else
+        game:GetService("StarterGui"):SetCore("SendNotification", { Title = "ERROR", Text = "Gagal memuat modul AvatarMod!", Duration = 5 })
+    end
+end)
+
+local BtnKorbloxAll = Instance.new("TextButton")
+BtnKorbloxAll.Size = UDim2.new(0.5, 0, 0, 40)
+BtnKorbloxAll.Text = "Korblox (Semua Orang)"
+BtnKorbloxAll.BackgroundColor3 = Color3.fromRGB(150, 50, 50)
+BtnKorbloxAll.TextColor3 = Color3.fromRGB(255, 255, 255)
+BtnKorbloxAll.Font = Enum.Font.GothamBold
+BtnKorbloxAll.TextSize = 13
+BtnKorbloxAll.Parent = PageAvatar
+local CornerKorbloxAll = Instance.new("UICorner")
+CornerKorbloxAll.CornerRadius = UDim.new(0, 6)
+CornerKorbloxAll.Parent = BtnKorbloxAll
+
+BtnKorbloxAll.MouseButton1Click:Connect(function()
+    local success, AvatarModule = pcall(function()
+        return loadstring(game:HttpGet("https://raw.githubusercontent.com/ilyfauzan/WayaeHUB/main/AvatarMod.lua"))()
+    end)
+    if success and type(AvatarModule) == "table" and AvatarModule.KorbloxAll then
+        AvatarModule.KorbloxAll()
+    else
+        game:GetService("StarterGui"):SetCore("SendNotification", { Title = "ERROR", Text = "Gagal memuat modul AvatarMod!", Duration = 5 })
+    end
+end)
+
 Pages["HomePage"].Visible = true
 BtnHome.BackgroundColor3 = Color3.fromRGB(70, 70, 220)
 BtnHome.TextColor3 = Color3.fromRGB(255, 255, 255)
