@@ -171,6 +171,32 @@ local function applyCrown(char)
     mesh.Scale = Vector3.new(1, 1, 1)
     mesh.Parent = crown
     
+    local pe = Instance.new("ParticleEmitter")
+    pe.Texture = "rbxassetid://256121966"
+    pe.Size = NumberSequence.new({
+        NumberSequenceKeypoint.new(0, 0.4),
+        NumberSequenceKeypoint.new(1, 0)
+    })
+    pe.Transparency = NumberSequence.new({
+        NumberSequenceKeypoint.new(0, 1),
+        NumberSequenceKeypoint.new(0.2, 0.2),
+        NumberSequenceKeypoint.new(0.8, 0.2),
+        NumberSequenceKeypoint.new(1, 1)
+    })
+    pe.Color = ColorSequence.new({
+        ColorSequenceKeypoint.new(0, Color3.fromHex("83fdff")),
+        ColorSequenceKeypoint.new(0.33, Color3.fromHex("00d5ff")),
+        ColorSequenceKeypoint.new(0.66, Color3.fromHex("3b991a")),
+        ColorSequenceKeypoint.new(1, Color3.fromHex("ffff00"))
+    })
+    pe.Lifetime = NumberRange.new(2, 2.5)
+    pe.Rate = 15
+    pe.Speed = NumberRange.new(2, 4)
+    pe.VelocitySpread = 15
+    pe.EmissionDirection = Enum.NormalId.Top
+    pe.ZOffset = 1
+    pe.Parent = crown
+    
     local weld = Instance.new("Weld")
     weld.Part0 = head
     weld.Part1 = crown
