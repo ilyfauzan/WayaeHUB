@@ -547,51 +547,6 @@ BtnKorbloxAll.MouseButton1Click:Connect(function()
     end
 end)
 
-local BtnCrown = Instance.new("TextButton")
-BtnCrown.Size = UDim2.new(0.5, 0, 0, 40)
-BtnCrown.Text = "Equip 8-Bit Crown"
-BtnCrown.BackgroundColor3 = Color3.fromRGB(200, 150, 50)
-BtnCrown.TextColor3 = Color3.fromRGB(255, 255, 255)
-BtnCrown.Font = Enum.Font.GothamBold
-BtnCrown.TextSize = 13
-BtnCrown.Parent = PageAvatar
-local CornerCrown = Instance.new("UICorner")
-CornerCrown.CornerRadius = UDim.new(0, 6)
-CornerCrown.Parent = BtnCrown
-
-BtnCrown.MouseButton1Click:Connect(function()
-    local success, AvatarModule = pcall(function()
-        return loadstring(game:HttpGet("https://raw.githubusercontent.com/ilyfauzan/WayaeHUB/main/AvatarMod.lua"))()
-    end)
-    if success and type(AvatarModule) == "table" and AvatarModule.Crown then
-        AvatarModule.Crown()
-    else
-        game:GetService("StarterGui"):SetCore("SendNotification", { Title = "ERROR", Text = "Gagal memuat modul AvatarMod!", Duration = 5 })
-    end
-end)
-
-local BtnCrownAll = Instance.new("TextButton")
-BtnCrownAll.Size = UDim2.new(0.5, 0, 0, 40)
-BtnCrownAll.Text = "8-Bit Crown (Semua Orang)"
-BtnCrownAll.BackgroundColor3 = Color3.fromRGB(150, 100, 50)
-BtnCrownAll.TextColor3 = Color3.fromRGB(255, 255, 255)
-BtnCrownAll.Font = Enum.Font.GothamBold
-BtnCrownAll.TextSize = 13
-BtnCrownAll.Parent = PageAvatar
-local CornerCrownAll = Instance.new("UICorner")
-CornerCrownAll.CornerRadius = UDim.new(0, 6)
-CornerCrownAll.Parent = BtnCrownAll
-
-BtnCrownAll.MouseButton1Click:Connect(function()
-    local success, AvatarModule = pcall(function()
-        return loadstring(game:HttpGet("https://raw.githubusercontent.com/ilyfauzan/WayaeHUB/main/AvatarMod.lua"))()
-    end)
-    if success and type(AvatarModule) == "table" and AvatarModule.CrownAll then
-        AvatarModule.CrownAll()
-    else
-        game:GetService("StarterGui"):SetCore("SendNotification", { Title = "ERROR", Text = "Gagal memuat modul AvatarMod!", Duration = 5 })
-    end
-end)
 
 Pages["HomePage"].Visible = true
 BtnHome.BackgroundColor3 = Color3.fromRGB(70, 70, 220)
