@@ -148,4 +148,69 @@ function AvatarMod.KorbloxAll()
     StarterGui:SetCore("SendNotification", { Title = "AVATAR", Text = "Korblox untuk SEMUA ORANG diaktifkan!", Duration = 3 })
 end
 
+local function applyCrown(char)
+    if char:FindFirstChild("8BitCrown") then return end
+    
+    local success, result = pcall(function()
+        return game:GetObjects("rbxassetid://10159600649")[1]
+    end)
+    
+    if not success or not result then
+        success, result = pcall(function()
+            return game:GetObjects("rbxassetid://108149175")[1]
+        end)
+    end
+    
+    if success and result then
+        if result:IsA("Accessory") then
+            result.Name = "8BitCrown"
+            result.Parent = char
+        elseif result:IsA("Model") then
+            local acc = result:FindFirstChildWhichIsA("Accessory")
+            if acc then
+                acc.Name = "8BitCrown"
+                acc.Parent = char
+            end
+        end
+    else
+        game:GetService("StarterGui"):SetCore("SendNotification", { Title = "ERROR", Text = "Executor tidak mendukung GetObjects atau ID usang.", Duration = 5 })
+    end
+end
+
+function AvatarMod.Crown()
+    local player = Players.LocalPlayer
+    local char = player.Character
+    if char then
+        applyCrown(char)
+        StarterGui:SetCore("SendNotification", { Title = "AVATAR", Text = "8-Bit Royal Crown (Self) diaktifkan!", Duration = 3 })
+    end
+end
+
+local crownAllConn = nil
+
+function AvatarMod.CrownAll()
+    if crownAllConn then
+        crownAllConn:Disconnect()
+        crownAllConn = nil
+    end
+    
+    local function doCrown(player)
+        if player.Character then applyCrown(player.Character) end
+        player.CharacterAdded:Connect(function(char)
+            task.wait(0.5)
+            applyCrown(char)
+        end)
+    end
+
+    for _, p in pairs(Players:GetPlayers()) do
+        doCrown(p)
+    end
+
+    crownAllConn = Players.PlayerAdded:Connect(function(p)
+        doCrown(p)
+    end)
+    
+    StarterGui:SetCore("SendNotification", { Title = "AVATAR", Text = "8-Bit Royal Crown untuk SEMUA ORANG diaktifkan!", Duration = 3 })
+end
+
 return AvatarMod
