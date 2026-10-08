@@ -151,30 +151,33 @@ end
 local function applyCrown(char)
     if char:FindFirstChild("8BitCrown") then return end
     
-    local success, result = pcall(function()
-        return game:GetObjects("rbxassetid://10159600649")[1]
-    end)
-    
-    if not success or not result then
-        success, result = pcall(function()
-            return game:GetObjects("rbxassetid://108149175")[1]
-        end)
+    local head = char:FindFirstChild("Head")
+    if not head then 
+        game:GetService("StarterGui"):SetCore("SendNotification", { Title = "ERROR", Text = "Kepala tidak ditemukan!", Duration = 5 })
+        return 
     end
     
-    if success and result then
-        if result:IsA("Accessory") then
-            result.Name = "8BitCrown"
-            result.Parent = char
-        elseif result:IsA("Model") then
-            local acc = result:FindFirstChildWhichIsA("Accessory")
-            if acc then
-                acc.Name = "8BitCrown"
-                acc.Parent = char
-            end
-        end
-    else
-        game:GetService("StarterGui"):SetCore("SendNotification", { Title = "ERROR", Text = "Executor tidak mendukung GetObjects atau ID usang.", Duration = 5 })
-    end
+    local crown = Instance.new("Part")
+    crown.Name = "8BitCrown"
+    crown.Size = Vector3.new(2, 1, 2)
+    crown.CanCollide = false
+    crown.Massless = true
+    crown.Transparency = 0
+    
+    local mesh = Instance.new("SpecialMesh")
+    mesh.MeshType = Enum.MeshType.FileMesh
+    mesh.MeshId = "rbxassetid://10138606900"
+    mesh.TextureId = "rbxassetid://10138606949"
+    mesh.Scale = Vector3.new(1, 1, 1)
+    mesh.Parent = crown
+    
+    local weld = Instance.new("Weld")
+    weld.Part0 = head
+    weld.Part1 = crown
+    weld.C0 = CFrame.new(0, 0.75, 0)
+    weld.Parent = crown
+    
+    crown.Parent = char
 end
 
 function AvatarMod.Crown()
