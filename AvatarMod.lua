@@ -48,14 +48,14 @@ local function applyKorblox(char)
                 
                 local fakeLeg = Instance.new("Part")
                 fakeLeg.Name = "FakeKorbloxLeg"
-                fakeLeg.Size = Vector3.new(1, 1, 1)
+                fakeLeg.Size = Vector3.new(1, 2, 1)
                 fakeLeg.CanCollide = false
                 fakeLeg.Massless = true
                 fakeLeg.Transparency = 0
                 
                 local mesh = Instance.new("SpecialMesh")
                 mesh.MeshType = Enum.MeshType.FileMesh
-                mesh.MeshId = "rbxassetid://902942093"
+                mesh.MeshId = "rbxassetid://902942096"
                 mesh.TextureId = "rbxassetid://902843398"
                 mesh.Scale = Vector3.new(1, 1, 1)
                 mesh.Parent = fakeLeg
@@ -63,7 +63,8 @@ local function applyKorblox(char)
                 local weld = Instance.new("Weld")
                 weld.Part0 = rul
                 weld.Part1 = fakeLeg
-                weld.C0 = CFrame.new(0, -0.2, 0)
+                weld.C0 = CFrame.new(0, -0.5, 0)
+                weld.C1 = CFrame.new(0, 0, 0)
                 weld.Parent = fakeLeg
                 
                 fakeLeg.Parent = char
