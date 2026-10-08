@@ -63,7 +63,7 @@ local function applyKorblox(char)
                 local weld = Instance.new("Weld")
                 weld.Part0 = rul
                 weld.Part1 = fakeLeg
-                weld.C0 = CFrame.new(0, 0.5, 0)
+                weld.C0 = CFrame.new(0, 0.15, 0)
                 weld.C1 = CFrame.new(0, 0, 0)
                 weld.Parent = fakeLeg
                 
